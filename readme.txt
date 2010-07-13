@@ -1,6 +1,6 @@
 === Geoposty ===
 
-Created by: Mobiah, Inc.
+Created by: Mobiah, mcinvale
 Tags: geo ip, maps, twitter, local, business, weather, location, ip address, widget, geo
 Requires at least: 2.7
 Tested up to: 3.0
