@@ -4,6 +4,7 @@ Created by: Mobiah, mcinvale
 Tags: geo ip, maps, twitter, local, business, weather, location, ip address, widget, geo
 Requires at least: 2.7
 Tested up to: 3.0
+Stable tag: 0.8
 
 Geoposty determines your visitor's location from their ip address, then displays dynamic content that is specific to their area.
 
@@ -61,6 +62,32 @@ Step 3: Enter your API code on the GeoPosty Account page.
 Step 4: Manage and customize GeoPosty content from your Widgets section, or use shortcodes in your content
 Step 5: Provide relevant and local content for each of your readers!
 
+== Frequently Asked Questions ==
+
+= Where is my GeoPosty API key? =
+
+We have emailed it to you.  It may be caught in your spam filter.  Please check there.  If it is not there, contact us: support@geoposty.com. 
+
+= How do I add a shortcode to my page or post? =
+
+Go to the wordpress page/post editor.  In the editor bar you will see a globe icon.  This globe icon launches the GeoPosty shortcode editor.  Click the globe icon to launch the shortcode editor.  Choose from any of the text shortcodes, map shortcodes, or redirect shortcode. 
+
+= Who supplies the geolocation data? =
+
+Quova Inc. - http://www.quova.com
+
+
+= How long will I have access to free data from Quova? =
+
+30 days or 10,000 hits, whichever occurs first.
+
+== Screenshots ==
+
+1. Once you have GeoPosty installed, here is where you need to click in the page/post editor to build shortcodes.
+2. Here you see the configuration of a map shortcode.
+3. Here you see the configuration of a GeoPosty sidebar widget.
+
+
 == Changelog ==
 
 0.4: 28 May 2010
@@ -77,4 +104,6 @@ enabled redirect based on user's location
 enabled usage stats
 paypal integration for subscriptions
 notifications re: conflicts with caching plugins
-== Contact ==
+
+
+
