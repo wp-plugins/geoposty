@@ -346,7 +346,7 @@ window.onbeforeunload = function() {
 				</tr>
 			</tfoot>
 			<tr>
-				<td valign="top"><p><label for="geoRedirectSource">Visitors to this url: http://www.yourdomain.com</label> <input type="text" id="geoRedirectSource" name="geoRedirects[0][source]" /><br />
+				<td valign="top"><p><label for="geoRedirectSource">Visitors to this url: http://www.yoursite.com</label> <input type="text" id="geoRedirectSource" name="geoRedirects[0][source]" /><br />
 				<label for="geoRedirectDestination">will be redirected to this url:</label> <input type="text" id="geoRedirectDestination" name="geoRedirects[0][destination]" /></p></td>
 				<td valign="top">
 
@@ -406,7 +406,7 @@ window.onbeforeunload = function() {
 	?>
 			<tr id="geoDeleteRow<?php echo $counter; ?>">
 				
-				<td valign="top"><p><label for="geoRedirectSource<?php echo $counter; ?>">Visitors to this url: http://www.yourdomain.com</label> <input type="text" id="geoRedirectSource<?php echo $counter; ?>" name="geoRedirects[<?php echo $counter; ?>][source]" value="<?php echo $redirect['source']; ?>" /><br />
+				<td valign="top"><p><label for="geoRedirectSource<?php echo $counter; ?>">Visitors to this url: http://www.yoursite.com</label> <input type="text" id="geoRedirectSource<?php echo $counter; ?>" name="geoRedirects[<?php echo $counter; ?>][source]" value="<?php echo $redirect['source']; ?>" /><br />
 				<label for="geoRedirectDestination<?php echo $counter; ?>">will be redirected to this url:</label> <input type="text" id="geoRedirectDestination<?php echo $counter; ?>" name="geoRedirects[<?php echo $counter; ?>][destination]" value="<?php echo $redirect['destination']; ?>" /><br />
 				<strong class="geoDeleteMe"><a href="#" class="geoDeleteRow<?php echo $counter; ?>">Delete This Redirect</a></strong></p></td>
 				<td valign="top">
