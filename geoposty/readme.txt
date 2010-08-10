@@ -18,7 +18,7 @@ Next, we use your custom search term/text/point of interest and combine it with 
 
 Mix it all together and you get the most relevant, personalized, location-specific content that ever made a WordPress user happy.
 
-Of course, you can try before you buy. The first month costs you nothing (up to 10,000 visitors!), then we offer many subscription levels to meet individual site's needs.
+The geolocation data for this service is free until further notice.  Heavy data usage is subject to capping. 
 
 As of this release, you can insert dynamic content items or shortcodes into pages or posts, and control who sees them based on their location or distance from a location. Additionally, there are four sidebar widgets to choose from, and you can have any number or combination of them active on your site at any time.
 
