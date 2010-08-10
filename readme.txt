@@ -1,7 +1,7 @@
 === Geoposty ===
 
 Contributors: Mobiah, mcinvale
-Tags: geo ip, maps, twitter, local, business, weather, location, ip address, widget, geo
+Tags: geolocation, geotargeting, ip geolocation, geolocated content, geotargeted content, geomarketing, geocoding, geographic location, geotargeting radius, localized content
 Requires at least: 2.7
 Tested up to: 3.0
 Stable tag: 0.8
