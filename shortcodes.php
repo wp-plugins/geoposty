@@ -27,46 +27,17 @@ function geoContentFilter( $attributes, $output = null ) {
 		'miles' => '',
 		'distancefrom' => '',
 		'locationtype' => '',
-		'location' => ''
+		'location' => '',
+		'reverse' => false
 	), $attributes));
 
 	if (!empty($distancefrom) && $miles > 1) {
 		if (geoDistanceFrom($distancefrom) > $miles) return false;
 	}
-	$locationTest = geoLocationContent($locationtype, $location);
+	$locationTest = geoLocationContent($locationtype, $location, $reverse);
 	if (!$locationTest) return false;
 
 	return do_shortcode($output);
-}
-
-function geoRRedirect($attributes) {
-
-	recordGeoStats('georredirect');
-
-	$redirecttype = '';
-	$goURL = '';
-	
-	extract(shortcode_atts(array(
-		'redirectpage' => '',
-		'redirecttype' => '',
-		'redirecturl' => '',
-		'miles' => '',
-		'distancefrom' => ''
-		
-	), $attributes));
-	//return $redirectpage . $redirecttype . $redirecturl . $miles . $distancefrom;
-	//return geoDistanceFrom($distancefrom);
-	if (!empty($distancefrom) && $miles > 1) {
-		if (geoDistanceFrom($distancefrom) > $miles) return false;
-	}
-	if ($redirecttype == 'page') {
-	
-		$goURL = get_bloginfo('url') . '?page_id=' . $redirectpage;
-	}
-	if ($redirecttype == 'url') {
-		$goURL = $redirecturl;
-	}
-	wp_redirect($goURL);
 }
 
 function geoDistanceFromShortcode($attributes) {
@@ -110,13 +81,15 @@ function geoGoogleBusinesses($attributes) {
 		'miles' => '',
 		'distancefrom' => '',
 		'locationtype' => '',
-		'location' => ''
+		'location' => '',
+		'reverse' => false
 	), $attributes));
 
 	if (!empty($distancefrom) && $miles > 1) {
-		if (geoDistanceFrom($distancefrom) > $miles) return false;
+		if ($reverse && (geoDistanceFrom($distancefrom) < $miles)) return false;
+		elseif (!$reverse && geoDistanceFrom($distancefrom) > $miles) return false;
 	}
-	$locationTest = geoLocationContent($locationtype, $location);
+	$locationTest = geoLocationContent($locationtype, $location, $reverse);
 	if (!$locationTest) return false;
 
 	$geoPosty = getGeoPosty();
@@ -139,13 +112,15 @@ function geoGoogleMapShortcode($attributes) {
 		'miles' => '',
 		'distancefrom' => '',
 		'locationtype' => '',
-		'location' => ''
+		'location' => '',
+		'reverse' => false
 	), $attributes));
 
 	if (!empty($distancefrom) && $miles > 1) {
-		if (geoDistanceFrom($distancefrom) > $miles) return false;
+		if ($reverse && (geoDistanceFrom($distancefrom) < $miles)) return false;
+		elseif (!$reverse && geoDistanceFrom($distancefrom) > $miles) return false;
 	}
-	$locationTest = geoLocationContent($locationtype, $location);
+	$locationTest = geoLocationContent($locationtype, $location, $reverse);
 	if (!$locationTest) return false;
 
 	return geoGoogleMap($width, $height, $search, $results);
@@ -187,13 +162,15 @@ function geoWeatherShortcode($attributes) {
 		'miles' => '',
 		'distancefrom' => '',
 		'locationtype' => '',
-		'location' => ''
+		'location' => '',
+		'reverse' => false
 	), $attributes));
 
 	if (!empty($distancefrom) && $miles > 1) {
-		if (geoDistanceFrom($distancefrom) > $miles) return false;
+		if ($reverse && (geoDistanceFrom($distancefrom) < $miles)) return false;
+		elseif (!$reverse && geoDistanceFrom($distancefrom) > $miles) return false;
 	}
-	$locationTest = geoLocationContent($locationtype, $location);
+	$locationTest = geoLocationContent($locationtype, $location, $reverse);
 	if (!$locationTest) return false;
 
 

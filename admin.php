@@ -28,6 +28,8 @@ function geoposty_shortcodes(){
 			if (jQuery('#geoWidgetRadiusDistance').val() > 0) shortattr += ' miles="'+ jQuery('#geoWidgetRadiusDistance').val() +'"';
 			if (jQuery('#geoWidgetLocationType').val() != '') shortattr += ' locationtype="'+ jQuery('#geoWidgetLocationType').val() +'"';
 			if (jQuery('#geoWidgetLocation').val()  != '') shortattr += ' location="'+ jQuery('#geoWidgetLocation').val() +'"';
+			if (jQuery('#geoReverseSearch').is(':checked')) shortattr += ' reverse="flipit"';
+
 		} else if (shortoptgroup == 'Weather Based Shortcodes') {
 			if (jQuery('#geoWidgetImage').is(':checked')) shortattr += ' image="on"';
 			if (jQuery('#geoWidgetHumidity').is(':checked')) shortattr += ' humidity="on"';
@@ -37,11 +39,14 @@ function geoposty_shortcodes(){
 			if (jQuery('#geoWidgetRadiusDistance').val() > 0) shortattr += ' miles="'+ jQuery('#geoWidgetRadiusDistance').val() +'"';
 			if (jQuery('#geoWidgetLocationType').val() != '') shortattr += ' locationtype="'+ jQuery('#geoWidgetLocationType').val() +'"';
 			if (jQuery('#geoWidgetLocation').val()  != '') shortattr += ' location="'+ jQuery('#geoWidgetLocation').val() +'"';
+			if (jQuery('#geoReverseSearch').is(':checked')) shortattr += ' reverse="flipit"';
+
 		} else if (shortoptgroup == 'Location Content Filtering') {
 			if (jQuery('#geoWidgetRadiusAddress').val() != '') shortattr += ' distancefrom="'+ jQuery('#geoWidgetRadiusAddress').val() +'"';
 			if (jQuery('#geoWidgetRadiusDistance').val() > 0) shortattr += ' miles="'+ jQuery('#geoWidgetRadiusDistance').val() +'"';
 			if (jQuery('#geoWidgetLocationType').val() != '') shortattr += ' locationtype="'+ jQuery('#geoWidgetLocationType').val() +'"';
 			if (jQuery('#geoWidgetLocation').val()  != '') shortattr += ' location="'+ jQuery('#geoWidgetLocation').val() +'"';
+			if (jQuery('#geoReverseSearch').is(':checked')) shortattr += ' reverse="flipit"';
 		} 
 		// PRIMER '1' FOR ADDED CODE M PILON
 		  else if (shortoptgroup == 'Redirection Shortcodes') {
@@ -61,6 +66,8 @@ function geoposty_shortcodes(){
 		jQuery('#geoWeatherOptions').slideUp();
 		jQuery('#geoRedirectOptions').slideUp();
 		jQuery('#geoLocalizedContent').slideUp();	
+		jQuery('#geoReverse').slideUp();
+
 
 			var win = window.dialogArguments || opener || parent || top;
 
@@ -79,6 +86,7 @@ function geoposty_shortcodes(){
 			jQuery('#geoMapOptions').slideDown();
 			jQuery('#geoRadiusLimit').slideDown();
 			jQuery('#geoLocationLimit').slideDown();
+			jQuery('#geoReverse').slideDown();
 			jQuery('#geoLocalizedContent').slideUp();
 			jQuery('#geoWeatherOptions').slideUp();
 			jQuery('#geoRedirectOptions').slideUp();
@@ -86,6 +94,7 @@ function geoposty_shortcodes(){
 			jQuery('#geoMapOptions').slideUp();
 			jQuery('#geoRadiusLimit').slideDown();
 			jQuery('#geoLocationLimit').slideDown();
+			jQuery('#geoReverse').slideDown();
 			jQuery('#geoWeatherOptions').slideDown();
 			jQuery('#geoLocalizedContent').slideUp();
 			jQuery('#geoRedirectOptions').slideUp();
@@ -93,6 +102,7 @@ function geoposty_shortcodes(){
 			jQuery('#geoMapOptions').slideUp();
 			jQuery('#geoRadiusLimit').slideDown();
 			jQuery('#geoLocationLimit').slideDown();
+			jQuery('#geoReverse').slideDown();
 			jQuery('#geoLocalizedContent').slideDown();
 			jQuery('#geoWeatherOptions').slideUp();
 			jQuery('#geoRedirectOptions').slideUp();
@@ -100,6 +110,7 @@ function geoposty_shortcodes(){
 			jQuery('#geoMapOptions').slideUp();
 			jQuery('#geoRadiusLimit').slideDown();
 			jQuery('#geoLocationLimit').slideDown();
+			jQuery('#geoReverse').slideDown();
 			jQuery('#geoLocalizedContent').slideUp();
 			jQuery('#geoWeatherOptions').slideUp();	
 			jQuery('#geoRedirectOptions').slideDown();
@@ -108,6 +119,7 @@ function geoposty_shortcodes(){
 			jQuery('#geoRadiusLimit').slideUp();
 			jQuery('#geoLocalizedContent').slideUp();
 			jQuery('#geoLocationLimit').slideUp();
+			jQuery('#geoReverse').slideUp();
 			jQuery('#geoWeatherOptions').slideUp();
 			jQuery('#geoRedirectOptions').slideUp();
 		}
@@ -202,7 +214,6 @@ function geoposty_shortcodes(){
 					of <input type="text" id="geoWidgetRadiusAddress" class="regular-text"  /><br />
 					<label for="geoWidgetRadiusAddress"><em><?php _e("This must be in the form <strong>City Name, ST</strong>."); ?></em></label><br />
 
-
 				</div>	
 			</div>
 			
@@ -226,6 +237,11 @@ function geoposty_shortcodes(){
 					<a href="http://www.iso.org/iso/english_country_names_and_code_elements" target="_blank">Use the ISO 2-letter code for countries</a></p>
 				</div>
 
+			</div>
+
+			<div id="geoReverse" style="display:none;padding:0 15px;">
+				<label for="geoReverseSearch">Reverse filtering</label>
+				<input type="checkbox" id="geoReverseSearch" />
 			</div>
 
 			<div id="geoLocalizedContent" style="display:none;padding:0 15px;">
@@ -289,15 +305,15 @@ function geo_ajax_followup() {
 
 add_action('admin_menu', 'geoposty_config_page');
 function geoposty_config_page() {
-	global $posty_plugin_url;
+	global $posty_plugin_url, $geoposty_api_key;
 
 	if ( function_exists('add_menu_page') ) {
 		add_menu_page(__('GeoPosty Account Manager'), __('GeoPosty'), 'manage_options', 'geoposty-key-config', 'geoposty_conf', $posty_plugin_url . '/images/icon.png');
 
-		add_submenu_page( 'geoposty-key-config', __('GeoPosty Account Manager'), __('Config &amp; Stats'), 'manage_options', 'geoposty-key-config', 'geoposty_conf');
-
-		add_submenu_page( 'geoposty-key-config', __('GeoPosty Redirects'), __('Redirects'), 'manage_options', 'geoposty-redirects', 'geoRedirectsConfig');
-
+		if (!empty($geoposty_api_key)) {
+			add_submenu_page( 'geoposty-key-config', __('GeoPosty Account Manager'), __('Config &amp; Stats'), 'manage_options', 'geoposty-key-config', 'geoposty_conf');
+			add_submenu_page( 'geoposty-key-config', __('GeoPosty Redirects'), __('Redirects'), 'manage_options', 'geoposty-redirects', 'geoRedirectsConfig');
+		}
 	}
 }
 
@@ -346,8 +362,10 @@ window.onbeforeunload = function() {
 				</tr>
 			</tfoot>
 			<tr>
-				<td valign="top"><p><label for="geoRedirectSource">Visitors to this url: http://www.yoursite.com</label> <input type="text" id="geoRedirectSource" name="geoRedirects[0][source]" /><br />
-				<label for="geoRedirectDestination">will be redirected to this url:</label> <input type="text" id="geoRedirectDestination" name="geoRedirects[0][destination]" /></p></td>
+				<td valign="top"><p><label for="geoRedirectSource">Visitors to this url:</label><br />
+				<?php echo get_option('siteurl'); ?><input type="text" id="geoRedirectSource" class="geoLongText" name="geoRedirects[0][source]" value="/" /><br />
+				<label for="geoRedirectDestination">will be redirected to this url:</label><br />
+				<input type="text" id="geoRedirectDestination" class="geoLongText" name="geoRedirects[0][destination]" value="<?php echo get_option('siteurl'); ?>/" /></p></td>
 				<td valign="top">
 
 					<h4 class="geoswitch"><a href="#" class="geoWidgetRadius">Radius Based Filtering</a></h4>
@@ -397,64 +415,70 @@ window.onbeforeunload = function() {
 			</tr>
 <?php
 	$geoRedirects = get_option('geoposty_redirects');
-	$counter = 0;
-	foreach ($geoRedirects as $redirect) {
 
-		if (empty($redirect['source']) || empty($redirect['destination'])) continue;
+	if (is_array($geoRedirects)) {
 
-		$counter++;
-	?>
-			<tr id="geoDeleteRow<?php echo $counter; ?>">
+		$counter = 0;
+		foreach ($geoRedirects as $redirect) {
+
+			if (empty($redirect['source']) || empty($redirect['destination'])) continue;
+
+			$counter++;
+		?>
+				<tr id="geoDeleteRow<?php echo $counter; ?>">
 				
-				<td valign="top"><p><label for="geoRedirectSource<?php echo $counter; ?>">Visitors to this url: http://www.yoursite.com</label> <input type="text" id="geoRedirectSource<?php echo $counter; ?>" name="geoRedirects[<?php echo $counter; ?>][source]" value="<?php echo $redirect['source']; ?>" /><br />
-				<label for="geoRedirectDestination<?php echo $counter; ?>">will be redirected to this url:</label> <input type="text" id="geoRedirectDestination<?php echo $counter; ?>" name="geoRedirects[<?php echo $counter; ?>][destination]" value="<?php echo $redirect['destination']; ?>" /><br />
-				<strong class="geoDeleteMe"><a href="#" class="geoDeleteRow<?php echo $counter; ?>">Delete This Redirect</a></strong></p></td>
-				<td valign="top">
+					<td valign="top"><p><label for="geoRedirectSource<?php echo $counter; ?>">Visitors to this url:</label><br />
+					<input type="text" id="geoRedirectSource<?php echo $counter; ?>" class="geoLongText" name="geoRedirects[<?php echo $counter; ?>][source]" value="<?php echo $redirect['source']; ?>" /><br />
+					<label for="geoRedirectDestination<?php echo $counter; ?>">will be redirected to this url:</label><br />
+					<input type="text" id="geoRedirectDestination<?php echo $counter; ?>" class="geoLongText" name="geoRedirects[<?php echo $counter; ?>][destination]" value="<?php echo $redirect['destination']; ?>" /><br />
+					<strong class="geoDeleteMe"><a href="#" class="geoDeleteRow<?php echo $counter; ?>">Delete This Redirect</a></strong></p></td>
+					<td valign="top">
 
-				<?php
-					if ($redirect['radius'] > 49) {
-				?>
-					<strong>Radius Based Filtering</strong><br />
+					<?php
+						if ($redirect['radius'] > 49) {
+					?>
+						<strong>Radius Based Filtering</strong><br />
 
-					<label><?php _e("Show this item to people who are within"); ?></label> <select name="geoRedirects[<?php echo $counter; ?>][radius]">
-						<option><?php echo $redirect['radius']; ?></option>
-						<option>50</option>
-						<option>100</option>
-						<option>200</option>
-						<option>500</option>
-						<option>1000</option>
-						<option>1500</option>
-						<option>5000</option>
-					</select>  miles <br />
+						<label><?php _e("Show this item to people who are within"); ?></label> <select name="geoRedirects[<?php echo $counter; ?>][radius]">
+							<option><?php echo $redirect['radius']; ?></option>
+							<option>50</option>
+							<option>100</option>
+							<option>200</option>
+							<option>500</option>
+							<option>1000</option>
+							<option>1500</option>
+							<option>5000</option>
+						</select>  miles <br />
 
-					of <input type="text" name="geoRedirects[<?php echo $counter; ?>][radiuslocation]" class="regular-text" value="<?php echo $redirect['radiuslocation']; ?>" /><br />
-					<label><em><?php _e("This must be in the form <strong>City Name, ST</strong>."); ?></em></label>
-				<?php
-					} else {
-				?>
-					<strong>Location Based Filtering</strong><br />
+						of <input type="text" name="geoRedirects[<?php echo $counter; ?>][radiuslocation]" class="regular-text" value="<?php echo $redirect['radiuslocation']; ?>" /><br />
+						<label><em><?php _e("This must be in the form <strong>City Name, ST</strong>."); ?></em></label>
+					<?php
+						} else {
+					?>
+						<strong>Location Based Filtering</strong><br />
 
-					<label><?php _e("Show this item to people who are in the"); ?></label>	
-					<select name="geoRedirects[<?php echo $counter; ?>][location]">
-						<option><?php echo $redirect['location']; ?></option>
-						<option>City</option>
-						<option>State/Province/Territory</option>
-						<option>Continent</option>
-						<option>Country</option>
-						<option>US Area Code</option>
-					</select><br />
+						<label><?php _e("Show this item to people who are in the"); ?></label>	
+						<select name="geoRedirects[<?php echo $counter; ?>][location]">
+							<option><?php echo $redirect['location']; ?></option>
+							<option>City</option>
+							<option>State/Province/Territory</option>
+							<option>Continent</option>
+							<option>Country</option>
+							<option>US Area Code</option>
+						</select><br />
 
-					of <input type="text" class="regular-text" name="geoRedirects[<?php echo $counter; ?>][locationaddress]" value="<?php echo $redirect['locationaddress']; ?>"  /><br />
-				<?php
-					}
-				?>
-
-
-				</td>
-			</tr>
+						of <input type="text" class="regular-text" name="geoRedirects[<?php echo $counter; ?>][locationaddress]" value="<?php echo $redirect['locationaddress']; ?>"  /><br />
+					<?php
+						}
+					?>
 
 
-	<?php
+					</td>
+				</tr>
+
+
+		<?php
+		}
 	}
 ?>
 
@@ -620,26 +644,60 @@ function geoposty_conf() {
 <?php
 	}
 
-	if (empty($geoposty_api_key)) echo '<p>Hello, new GeoPosty user! Let\'s get you set up to start putting localized content on your site!</p>';
+	if (empty($geoposty_api_key)) { 
+		echo '<p>Hello, new GeoPosty user! Let\'s get you set up to start putting localized content on your site!</p>';
+
+		$geoposty_tests = get_option('geoposty_tests');
+
+		if (empty($geoposty_tests)) {
+			echo '<p>First, we need to run a couple of tests to confirm that your server can run GeoPosty. Don\'t worry, this won\'t hurt a bit.</p>';
+
+			if (version_compare(phpversion(), "5.0", ">=")) $geoPHPTest = ' class="geopass"';
+			if (function_exists(simplexml_load_string)) $geoXMLTest = ' class="geopass"';
+			if (function_exists(json_decode)) $geoJSONTest = ' class="geopass"';
+			if (wp_remote_retrieve_response_code(wp_remote_get('http://api.geoposty.com/')) == '200') $geoRemoteAPI = ' class="geopass"';
+
 ?>
-		<form action="" method="post" id="geoposty-conf" >
+			<dl class="geoTests">
+				<dt>PHP Version</dt>
+				<dd<?php echo $geoPHPTest; ?>>Confirming PHP version</dd>	
+				<dt>SimpleXML</dt>
+				<dd<?php echo $geoXMLTest; ?>>Confirming SimpleXML is available</dd>
+				<dt>json_decode</dt>
+				<dd<?php echo $geoXMLTest; ?>>Confirming json_decode is available</dd>
+				<dt>External Request to API</dt>
+				<dd<?php echo $geoRemoteAPI; ?>>Outbound request to API</dd>
+			</dl>
+<?php
+			if (!empty($geoPHPTest) && !empty($geoXMLTest) && !empty($geoJSONTest) && !empty($geoRemoteAPI)) {
+				add_option('geoposty_tests', 'Great success!!');
+?>
+				<h2 class="geoSuccess">Success! You can run GeoPosty on your server. <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?page=geoposty-key-config">Continue to configuration</a></h2>
+<?php	
+			}
+		} else {
+?>
+			<form action="" method="post" id="geoposty-conf" >
 
-			<input type="hidden" id="geoPostyTest" value="" />
+				<input type="hidden" id="geoPostyTest" value="" />
 
-			<table class="form-table">
-				<tr>
-					<th scope="row"><label for="geoPostyKey">First, enter your key here:</label></th>
-					<td><input id="geoPostyKey" name="geoPostyKey" type="text" class="regular-text" value="<?php echo $geoposty_api_key; ?>" /></td>
-				</tr>
+				<table class="form-table">
+					<tr>
+						<th scope="row"><label for="geoPostyKey">First, enter your key here:</label></th>
+						<td><input id="geoPostyKey" name="geoPostyKey" type="text" class="regular-text" value="<?php echo $geoposty_api_key; ?>" /></td>
+					</tr>
 
-				<tr>
-					<td colspan="2" class="aligncenter"><?php if (empty($geoposty_api_key)) echo '<a href="http://geoposty.com/request-your-api-key/" target="_blank">Request an API key</a>'; ?><div id="geoKeyReply"></div></td>
-				</tr>
-			</table>
+					<tr>
+						<td colspan="2" class="aligncenter"><?php if (empty($geoposty_api_key)) echo '<a href="http://geoposty.com/request-your-api-key/" target="_blank">Request an API key</a>'; ?><div id="geoKeyReply"></div></td>
+					</tr>
+				</table>
 
-		<p class="submit"><input type="submit" id="geosubmit" class="button-primary" name="submit" value="<?php _e('Test Your Key &raquo;'); ?>" /></p>
-		</form>
-
+			<p class="submit"><input type="submit" id="geosubmit" class="button-primary" name="submit" value="<?php _e('Test Your Key &raquo;'); ?>" /></p>
+			</form>
+<?php
+		}
+	}
+?>
 
 
 	</div><!-- narrow -->

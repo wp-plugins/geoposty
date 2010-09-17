@@ -134,7 +134,7 @@ function geoDistanceFrom($address) {
 	return getGeoDistance($geoPosty['Latitude'], $geoPosty['Longitude'], $latlng['latitude'], $latlng['longitude']);
 }
 
-function geoLocationContent($locationtype, $location) {
+function geoLocationContent($locationtype, $location, $reverse = false) {
 	$geoPosty = getGeoPosty();
 	if (!is_array($geoPosty)) return false;
 	
@@ -167,7 +167,8 @@ function geoLocationContent($locationtype, $location) {
 	// remove whitespace
 	array_walk($locationArray, 'trim_value');
 
-	if (!in_array(strtolower($locationString), $locationArray)) return false;
+	if ($reverse && in_array(strtolower($locationString), $locationArray)) return false;
+	elseif (!$reverse && !in_array(strtolower($locationString), $locationArray)) return false;
 
 	return true;
 }
@@ -214,7 +215,7 @@ function geoRedirects() {
 
 	$cleanURL = $_SERVER['REQUEST_URI'];
 
-	// check the URL for ? parameters and remove is necessary
+	// check the URL for ? parameters and remove if necessary
 	$getPosition = strpos($cleanURL,'?');
 	if ($getPosition > 0) $cleanURL = substr($_SERVER['REQUEST_URI'],0,$getPosition);
 

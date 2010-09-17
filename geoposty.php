@@ -5,9 +5,9 @@
 	Plugin URI: http://geoposty.com/
 
 	Description: Provide users a more geographically rich experience with GeoPosty.  Leveraging IP geo location data from the Quova platform, you can provide users with maps, weather, business, and text not only relevant to your topic, but relevant to your user's location.  Widgets and shortcodes are preloaded to make implementation a snap.
-	Version: 0.8
+	Version: 0.9
 
-	Author: GeoPosty Team</a> | <a href="http://geoposty.com/unsubscribe/" target="_blank">Unsubscribe
+	Author: GeoPosty Team
 	Author URI: http://geoposty.com/
 */
 
@@ -17,21 +17,12 @@
 // debug
 require(dirname(__FILE__)  . '/functions.php');
 
+// need to compress all databae entries into single array
 $geoposty_api_key = get_option('geoposty_api_key');
 $posty_plugin_url = trailingslashit( get_bloginfo('wpurl') ).PLUGINDIR.'/'. dirname( plugin_basename(__FILE__));
 $geoMD5 = md5(getGeoIpAddress());
 
-// plugin won't work with PHP4
-if (!version_compare(phpversion(), "5.0", ">=")) {
-
-	function geoposty_php_warning() {
-		echo "
-			<div id='geoposty-warning' class='updated fade'><p><strong>".__('<a href="http://geoposty.com/">GeoPosty</a> needs PHP5!')."</strong> ". __('PHP4 was released in 2000, before Internet Explorer 6! You should contact your webhost and ask them to upgradde (with 2 Ds for a double dose of GeoPosty awesome) your software. You will receive this message until you deactive the plugin or update to at least PHP5. Sorry.') ."</p></div>
-		";
-	}
-	add_action('admin_notices', 'geoposty_php_warning');	
-
-} elseif (empty($geoposty_api_key)) {
+if (empty($geoposty_api_key)) {
 
 	function geoposty_warning() {
 		echo "
@@ -42,6 +33,7 @@ if (!version_compare(phpversion(), "5.0", ">=")) {
 	if (is_admin()) {
 		require(dirname(__FILE__)  . '/admin.php');
 		wp_enqueue_script('geopostyadminjs', $posty_plugin_url . "/js/geoposty-admin.js", array('jquery'));
+		wp_enqueue_style('geopostyadmincss', $posty_plugin_url . "/css/geoposty-admin.css");
 	}
 
 } else {
@@ -70,9 +62,26 @@ if (!version_compare(phpversion(), "5.0", ">=")) {
 	} else {
 		require(dirname(__FILE__)  . '/admin.php');
 		wp_enqueue_script('geopostyadminjs', $posty_plugin_url . "/js/geoposty-admin.js", array('jquery'));
+		wp_enqueue_style('geopostyadmincss', $posty_plugin_url . "/css/geoposty-admin.css");
 
 		// reserved for checking updates and sending users messages
 		// add_action('after_plugin_row_' . plugin_basename(__FILE__),  'geoposty_plugin_row');
 	}
 }
+
+
+register_deactivation_hook( __FILE__, 'geoposty_deactivate');
+
+function geoposty_deactivate() {
+	// remove the options we put into the database
+	// transient stuff will leave on its own
+	delete_option('geoposty_api_key');
+	delete_option('geoposty_tests');
+	delete_option('geoposty_redirects');
+	delete_option('geoLogging');
+	delete_option('geoHundred');
+	delete_option('geoStats');
+	delete_option('geoAddressLocation');			
+}
+
 ?>
