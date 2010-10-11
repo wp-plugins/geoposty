@@ -61,6 +61,9 @@ jQuery(document).ready(function($) {
 			$(this).remove();
 		});
 
+		$('#geoRedirectSave').addClass('updated').html('You must save your redirects to complete the deletion process!');
+
+
 		return false;
 	});
 

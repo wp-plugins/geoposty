@@ -4,7 +4,7 @@ Contributors: Mobiah, mcinvale
 Tags: geolocation, geotargeting, ip geolocation, geolocated content, geotargeted content, geomarketing, geocoding, geographic location, geotargeting radius, localized content
 Requires at least: 2.7
 Tested up to: 3.0.1
-Stable tag: 0.9
+Stable tag: 0.9.1
 
 Geoposty determines your visitor's location from their ip address, then displays dynamic content that is specific to their area.
 
@@ -88,6 +88,9 @@ Initial release
 	* updated filtering features to allow for excluding locations
 	* enhanced city identification mechanism
 
+0.9.1 October 2010
+	
+	* fixed bug caused by saving blank redirects
 
 == License ==
 

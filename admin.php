@@ -322,8 +322,14 @@ function geoRedirectsConfig() {
 		if ( function_exists('current_user_can') && !current_user_can('manage_options') )
 			die(__('Cheatin&#8217; uh?'));
 
-		// check_admin_referer( $geoposty_nonce );
 		$redirects = $_POST['geoRedirects'];
+
+		// let's kill a bug
+		for($r=0;$r<count($redirects);$r++) {
+			if (($redirects[$r]['source'] == '/' && $redirects[$r]['destination'] == get_option('siteurl') . '/')) unset($redirects[$r]);
+		}
+
+		$redirects = array_merge($redirects);
 
 		if ( empty($redirects) ) {
 			delete_option('geoposty_redirects');
@@ -344,7 +350,7 @@ window.onbeforeunload = function() {
 <div class="wrap">
 	<h2><?php _e('GeoPosty Redirects'); ?></h2>
 	<div class="tool-box">
-		<p>Configure some redirects!</p>
+		<p id="geoRedirectSave">Configure some redirects!</p>
 
 		<form action="" method="post" id="geoposty-redirects" >
 
