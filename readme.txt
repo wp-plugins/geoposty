@@ -1,7 +1,7 @@
 === Geo Location Widgets Geoposty ===
 
 Contributors: Mobiah, mcinvale
-Tags: geolocation, geotargeting, ip geolocation, geolocated content, geotargeted content, geomarketing, geocoding, geographic location, geotargeting radius, localized content
+Tags: location, geo, geolocation, geotargeting, ip geolocation, geolocated content, geotargeted content, geomarketing, geocoding, geographic location, geotargeting radius, localized content, location widgets
 Requires at least: 2.7
 Tested up to: 3.0.1
 Stable tag: 0.9.2
