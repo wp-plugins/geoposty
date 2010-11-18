@@ -1,11 +1,11 @@
 <?php
 /*
-	Plugin Name: GeoPosty 
+	Plugin Name: Geo Location Tool GeoPosty 
 
 	Plugin URI: http://geoposty.com/
 
 	Description: Provide users a more geographically rich experience with GeoPosty.  Leveraging IP geo location data from the Quova platform, you can provide users with maps, weather, business, and text not only relevant to your topic, but relevant to your user's location.  Widgets and shortcodes are preloaded to make implementation a snap.
-	Version: 0.9.1
+	Version: 0.9.2
 
 	Author: GeoPosty Team
 	Author URI: http://geoposty.com/
@@ -15,12 +15,19 @@
 // error_reporting (E_ALL ^ E_NOTICE);
 // ini_set("display_errors", 1);
 // debug
+
+define('GDEBUG',false);
+define('SERVER','http://api.geoposty.com/');
+define('GEOSERVER','http://api.geoposty.com/geo.php?');
+
+
 require(dirname(__FILE__)  . '/functions.php');
 
 // need to compress all databae entries into single array
 $geoposty_api_key = get_option('geoposty_api_key');
 $posty_plugin_url = trailingslashit( get_bloginfo('wpurl') ).PLUGINDIR.'/'. dirname( plugin_basename(__FILE__));
 $geoMD5 = md5(getGeoIpAddress());
+if(GDEBUG) { error_log("geoposty: api_key=$geoposty_api_key"); }
 
 if (empty($geoposty_api_key)) {
 

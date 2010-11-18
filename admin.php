@@ -253,7 +253,7 @@ function geoposty_shortcodes(){
 			<!-- added by matt pilon 6/25/2010 -->
 			<div id="geoRedirectOptions" style="display:none; padding:15px 15px 0 15px;">
 					<h4>Redirect users meeting this criterion to:</h4>
-					<input type="radio" name="redirectType" value="page">&nbsp; &nbsp; This page: &nbsp; &nbsp;<?php wp_dropdown_pages(array("name" => 'destinationPage', "show_option_none" => "Select a page", "selected" => '')); ?></label><br />&nbsp; &nbsp;&nbsp; &nbsp;-OR-<br>
+					<input type="radio" name="redirectType" value="page">&nbsp; &nbsp; This page: &nbsp; &nbsp;<?php wp_dropdown_pages(array("name" => 'destinationPage', "show_option_none" => "Select a page", "selected" => '')); ?><br />&nbsp; &nbsp;&nbsp; &nbsp;-OR-<br>
 					<input type="radio" name="redirectType" value="url">&nbsp; &nbsp;This URL:&nbsp; &nbsp; <input type="text" id="destinationURL">	 
 			</div>
 			<!-- end added by matt pilon -->
@@ -277,29 +277,25 @@ add_action('wp_ajax_geo_followup', 'geo_ajax_followup');
 function geo_ajax_confirm() {
 	global $current_user, $_GET;
 
-	$geoRequestURL = 'http://api.geoposty.com/geo.php?domain='. $_SERVER['HTTP_HOST'] .'&ip='. getGeoIPAddress() .'&domainkey=' . $_GET['domainkey'];
-
+	$ip = getGeoIpAddress();
+	$host = $_SERVER['HTTP_HOST'];
+	if(GDEBUG) { error_log("geoposty:admin:geo_ajax_confirm host=$host ip=$ip"); }
+	$geoRequestURL = GEOSERVER . 'domain='. $host .'&ip='. $ip .'&domainkey=' . $_GET['domainkey'];
+	if(GDEBUG) { error_log("geoposty:admin:geo_ajax_confirm geoRequestURL=$geoRequestURL"); }
 
 	$data = trim(wp_remote_retrieve_body(wp_remote_get($geoRequestURL)));
-
 	$geoPostyXML = @simplexml_load_string($data);
-
-	if (!$geoPostyXML) {
-		echo 'There was some type of problem with your request. The API said: <em>' . $data . '</em>';
-	}
-
+	if (!$geoPostyXML) { echo 'There was some type of problem with your request. The API said: <em>' . $data . '</em>'; }
 	die();
 }
 
 function geo_ajax_followup() {
 	global $current_user;
-
-	$geoRequestURL = 'http://api.geoposty.com/geo.php?domain='. $_SERVER['HTTP_HOST'] .'&email='. $current_user->user_email .'&confirm=1';
-
+	// WARN current_user user_email: assumes that my local email here is same as email I typed on geoposty.com to get api key
+	$geoRequestURL = GEOSERVER . 'domain='. $_SERVER['HTTP_HOST'] .'&email='. $current_user->user_email .'&confirm=1';
 	$data = trim(wp_remote_retrieve_body(wp_remote_get($geoRequestURL)));
-
+	if(GDEBUG) { error_log("geoposty:admin:geo_ajax_followup url=$geoRequestURL data=$data geoposty_api_key=$geoposty_api_key"); }
 	echo $data;
-
 	die();
 }
 
@@ -313,8 +309,22 @@ function geoposty_config_page() {
 		if (!empty($geoposty_api_key)) {
 			add_submenu_page( 'geoposty-key-config', __('GeoPosty Account Manager'), __('Config &amp; Stats'), 'manage_options', 'geoposty-key-config', 'geoposty_conf');
 			add_submenu_page( 'geoposty-key-config', __('GeoPosty Redirects'), __('Redirects'), 'manage_options', 'geoposty-redirects', 'geoRedirectsConfig');
+			add_submenu_page( 'geoposty-key-config', __('GeoPosty Readme'), __('Help'), 'manage_options', 'geoposty-readme', 'geopostyReadme');
 		}
 	}
+}
+
+function geopostyReadme() {
+	$file = dirname(__FILE__)  . '/help.html';
+	if(GDEBUG) { error_log("geoposty:admin:geopostyReadme file=$file"); }
+	$readme = file_get_contents($file);
+	$msg = <<<PAGE
+<div class="wrap">
+	<div class="tool-box">$readme
+	</div>
+</div>
+PAGE;
+	print $msg;
 }
 
 function geoRedirectsConfig() {
@@ -528,15 +538,12 @@ function geoCachingPlugins() {
 
 function geoStatsGraph($type, $count) {
 	$geoDailyStats = geoAdminStats($type);
-
 	$geoMaxDay = 0;
 	$geoDayCount = 0;
 
 	foreach ($geoDailyStats as $geoDay) {
-
 		$geoDayCount++;
 		if ($geoDayCount == $count) break;
-
 		if ($type == 'd') {
 			$arrayGeoStats[] = $geoDay['1'];
 			$arrayGeoDays[] = date('m-d', strtotime($geoDay['0']));
@@ -562,21 +569,28 @@ function geoposty_conf() {
 			die(__('Cheatin&#8217; uh?'));
 
 		// check_admin_referer( $geoposty_nonce );
-		$key = $_POST['geoPostyKey'];
+		$key = trim($_POST['geoPostyKey']);
+		if(GDEBUG) { error_log("geoposty:admin:geoposty_conf key=:$key:"); }
 
 		// reset our cache for testing!
 		// this isn't permanent
 		reset_geo_cache();
 
-		if ( empty($key) ) {
-			delete_option('geoposty_api_key');
-		} else {
-			update_option('geoposty_api_key', $key);
+		if ( empty($key) ) { delete_option('geoposty_api_key'); } 
+		else { 
+			update_option('geoposty_api_key', $key); 
+			$sname = "admin.php?page=geoposty-readme";
+			if(GDEBUG) { error_log("geoposty:admin:geoposty_conf update_option : saving key to database sname=$sname"); }
+			// jump to help page for first time user
+			?>
+			<script type="text/javascript">window.location = '<?php echo $sname; ?>';</script>
+			<?php
 		}
 	}
 
 	// don't use global here
 	$geoposty_api_key = get_option('geoposty_api_key');
+	if(GDEBUG) { error_log("geoposty:admin:geoposty_conf api_key=:$geoposty_api_key:"); }
 ?>
 <?php if ( !empty($_POST['submit'] ) ) : ?>
 	<div id="message" class="updated fade">
@@ -604,13 +618,16 @@ function geoposty_conf() {
 	
 	$geoAdminSummary = geoAdminStats('s');
 	$geoAdminSubscription = geoAdminStats('p');
+	$subserver = SERVER . 'isubs.php?domainkey=' . $geoposty_api_key . '&domain=' . $_SERVER['HTTP_HOST'];
+	$host = $_SERVER['HTTP_HOST'];
+	if(GDEBUG) { error_log("geoposty:admin:geoposty_conf host=$host : subserver=$subserver"); }
 
 	if ($geoAdminSubscription[0][2] > 1) {
 		// subscribed!
 ?>
 		<h3><?php echo number_format(($geoAdminSummary['0']['2']/$geoAdminSummary['0']['1'])*100); ?>% of lookups used for this subscription period.</h3>
 
-		<iframe src="http://api.geoposty.com/isubs.php?domainkey=<?php echo $geoposty_api_key; ?>&domain=<?php echo $_SERVER['HTTP_HOST']; ?>" width="400" height="150" style="display:none;" class="alignright" id="geoChangeiframe"></iframe>
+		<iframe src="<?php echo $subserver; ?>" width="400" height="150" style="display:none;" class="alignright" id="geoChangeiframe"></iframe>
 
 		<p><strong>Subscription Information</strong><br />
 		Monthly Subscription: <?php echo number_format($geoAdminSubscription[0][2]); ?> lookups/month for $<?php echo number_format($geoAdminSubscription[0][0], 2); ?>  <a href="#" id="geoChangeSubscription">Change</a><br />
@@ -620,15 +637,25 @@ function geoposty_conf() {
 <?php
 	} else {
 		// not subscribed!
+		if($host == 'localhost') {
 ?>
-
-		<iframe src="http://api.geoposty.com/isubs.php?domainkey=<?php echo $geoposty_api_key; ?>&domain=<?php echo $_SERVER['HTTP_HOST']; ?>" width="400" height="150" class="alignright"></iframe>
-
+		<h2>You are using a LOCALHOST test key.</h2>
+		<h3>When moving to your live server, you MUST install the Geoposty plugin there in order to get a live key</h3>
+<?php
+		}
+		else {
+?>
+		<iframe src="<?php echo $subserver?>" width="400" height="150" class="alignright"></iframe>
 		<h3>You have used <?php echo $geoAdminSummary['0']['2']; ?> of your 10,000 free* lookups this month!</h3>
 
 		
 <?php
+		}
 	}
+
+
+	if($host == 'localhost') { }
+	else {
 ?>
 
 
@@ -648,6 +675,7 @@ function geoposty_conf() {
 
 
 <?php
+		}
 	}
 
 	if (empty($geoposty_api_key)) { 
@@ -661,7 +689,7 @@ function geoposty_conf() {
 			if (version_compare(phpversion(), "5.0", ">=")) $geoPHPTest = ' class="geopass"';
 			if (function_exists(simplexml_load_string)) $geoXMLTest = ' class="geopass"';
 			if (function_exists(json_decode)) $geoJSONTest = ' class="geopass"';
-			if (wp_remote_retrieve_response_code(wp_remote_get('http://api.geoposty.com/')) == '200') $geoRemoteAPI = ' class="geopass"';
+			if (wp_remote_retrieve_response_code(wp_remote_get(SERVER)) == '200') $geoRemoteAPI = ' class="geopass"';
 
 ?>
 			<dl class="geoTests">
@@ -681,7 +709,8 @@ function geoposty_conf() {
 				<h2 class="geoSuccess">Success! You can run GeoPosty on your server. <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?page=geoposty-key-config">Continue to configuration</a></h2>
 <?php	
 			}
-		} else {
+		} 
+		else {
 ?>
 			<form action="" method="post" id="geoposty-conf" >
 
@@ -694,11 +723,18 @@ function geoposty_conf() {
 					</tr>
 
 					<tr>
-						<td colspan="2" class="aligncenter"><?php if (empty($geoposty_api_key)) echo '<a href="http://geoposty.com/request-your-api-key/" target="_blank">Request an API key</a>'; ?><div id="geoKeyReply"></div></td>
+						<td colspan="2" class="aligncenter">
+<?php 
+	if (empty($geoposty_api_key)) {
+		if($_SERVER['HTTP_HOST'] == 'localhost') { echo '<a href="http://geoposty.com/request-geoposty-localhost-development-key/" target="_blank">Request a <b>LOCALHOST</b> test API key</a>'; }
+		else { echo '<a href="http://geoposty.com/request-your-api-key/" target="_blank">Request an API key</a>'; }
+	}
+?>
+						<div id="geoKeyReply"></div></td>
 					</tr>
 				</table>
 
-			<p class="submit"><input type="submit" id="geosubmit" class="button-primary" name="submit" value="<?php _e('Test Your Key &raquo;'); ?>" /></p>
+			<p class="submit"><input type="submit" id="geosubmit" class="button-primary" name="submit" value="Test Your Key &raquo;" /></p>
 			</form>
 <?php
 		}

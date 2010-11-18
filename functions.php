@@ -99,10 +99,11 @@ function recordGeoStats($name) {
 
 // borrowed from http://roshanbh.com.np/2007/12/getting-real-ip-address-in-php.html
 function getGeoIpAddress() {
+	//if(GDEBUG){ error_log("geoposty:functions:geoGeoIp: client_ip=".$_SERVER['HTTP_CLIENT_IP']." : x_forw=".$_SERVER['HTTP_X_FORWARDED_FOR']." : remote=".$_SERVER['REMOTE_ADDR']);}
+	//if(GDEBUG){ error_log("geoposty:functions:geoGeoIp: server=" . var_export($_SERVER,true));}
 	if (!empty($_SERVER['HTTP_CLIENT_IP'])) $ip=$_SERVER['HTTP_CLIENT_IP'];
 	elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
 	else $ip=$_SERVER['REMOTE_ADDR'];
-
 	return $ip;
 }
 

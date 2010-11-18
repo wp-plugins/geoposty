@@ -9,10 +9,13 @@ function getGeoPosty() {
 
 	// only query quova if needed
 	if (!is_array($geoPosty)) {
-		// should replace the _SERVER variables (or at least do a bunch of checking on them).
-		// also add some better error checking
-		$data = wp_remote_retrieve_body(wp_remote_get('http://api.geoposty.com/geo.php?domain='. $_SERVER['HTTP_HOST'] .'&ip='. getGeoIpAddress() .'&domainkey=' . $geoposty_api_key));
+		// should replace the _SERVER variables (or at least do a bunch of checking on them).  also add some better error checking
 
+		$ip = getGeoIpAddress();
+		$host = $_SERVER['HTTP_HOST'];
+		$server = GEOSERVER .'domain='. $host .'&ip='. $ip .'&domainkey=' . $geoposty_api_key;
+		if(GDEBUG) { error_log("geoposty:curl:getGeoPosty ip=$ip server=$server"); }
+		$data = wp_remote_retrieve_body(wp_remote_get($server));
 		$geoPostyXML = @simplexml_load_string($data);
 
 		if (!$geoPostyXML) {
@@ -97,7 +100,9 @@ function geoGetAddressLocation($address) {
 
 	if ($getAddressLocation[$addressMD5]) return $getAddressLocation[$addressMD5];
 	else {
-		$data = wp_remote_retrieve_body(wp_remote_get('http://api.geoposty.com/geosearch.php?domainkey='.$geoposty_api_key.'&q='.urlencode($address)));
+		$server = SERVER . 'geosearch.php?domainkey='.$geoposty_api_key.'&q='.urlencode($address);
+		if(GDEBUG) { error_log("geoposty:curl:geoGetAddressLocation: server=$server "); }
+		$data = wp_remote_retrieve_body(wp_remote_get($server));
 
 		if (trim($data) == 'Error: invalid query') return false;
 
@@ -115,7 +120,7 @@ function geoGetAddressLocation($address) {
 function geoAdminStats($type) {
 	global $geoposty_api_key;
 
-	$data = wp_remote_retrieve_body(wp_remote_get('http://api.geoposty.com/geo.php?domain='. $_SERVER['HTTP_HOST'] .'&domainkey=' . $geoposty_api_key . '&stats=' . $type));
+	$data = wp_remote_retrieve_body(wp_remote_get(GEOSERVER .'domain='. $_SERVER['HTTP_HOST'] .'&domainkey=' . $geoposty_api_key . '&stats=' . $type));
 
 	return json_decode($data);
 }
