@@ -61,8 +61,8 @@ A: **For the "Visitors to this url:" box, enter only the portion of the address 
 
 **For the "will be directed to this url:" box, enter the full URL no matter what domain the destination url is on (e.g. "http://www.yourdomain.com/texas/" or "http://www.volvo-north-america.com")
 
-Q: Who's the man/woman?
-A: You are.
+Q: Can I try out GeoPosty on my local machine?
+A: Yes. When installing the geoposty plugin on localhost, you will automatically receive a localhost API test key. When you are ready to move geoposty to your real server, just make sure to reinstall Geoposty on your server to obtain the correct API key for your domain.
 
 == Upgrade Notice ==
 
@@ -95,7 +95,7 @@ Initial release
 	
 	* fixed bug caused by saving blank redirects
 
-0.9.2 November 18, 2010
+0.9.2 November 3, 2010
 
 	* enable testing of plugin on a localhost
 	* new help section
