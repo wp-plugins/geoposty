@@ -95,7 +95,7 @@ Initial release
 	
 	* fixed bug caused by saving blank redirects
 
-0.9.2 November 3, 2010
+0.9.2 November 18, 2010
 
 	* enable testing of plugin on a localhost
 	* new help section
