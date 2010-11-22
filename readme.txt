@@ -1,7 +1,7 @@
-=== Geo Location Widgets Geoposty ===
+=== Geoposty GeoLocation Widgets, Posts and Redirects ===
 
 Contributors: Mobiah, mcinvale
-Tags: location, geo, geolocation, geotargeting, ip geolocation, geolocated content, geotargeted content, geomarketing, geocoding, geographic location, geotargeting radius, localized content, location widgets
+Tags: location, geolocation, geotargeting, geo, ip geolocation, geolocated content, geotargeted content, geomarketing, geocoding, geographic location, geotargeting radius, localized content, location widgets
 Requires at least: 2.7
 Tested up to: 3.0.1
 Stable tag: 0.9.2
@@ -12,7 +12,7 @@ Geoposty determines your visitor's location from their ip address, then displays
 
 Geoposty shows each of your readers information that is unique to their location and relevant to your site.
 
-First, we combine your user's ip address with the world's most accurate database of geoip information.  Next, we use your custom search term/text/point of interest and combine it with reliable APIs from Google and others.  Mix it all together and you get the most relevant, personalized, location-specific content that ever made a WordPress user happy.
+First, we combine your user's IP address with the world's most accurate database of geolocation IP information.  Next, we use your custom search term/text/point of interest and combine it with reliable APIs from Google and others.  Mix it all together and you get the most relevant, personalized, location-specific content that ever made a WordPress user happy.
 
 The geolocation data used by this plugin--provided by Quova, Inc.--is free until further notice.  Heavy data usage is subject to capping. 
 
@@ -36,7 +36,7 @@ A note about best practices: GeoPosty is not for spammers or other unsavory folk
 
 == Screenshots ==
 
-1 Geoposty weather widget
+1. Geoposty weather widget
 
 == Installation ==
 
