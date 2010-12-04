@@ -102,7 +102,11 @@ Initial release
 
 0.9.3 November 30, 2010
 
-	* IE bug fix 
+	* IE bug fix
+ 
+0.9.4 December 4, 2010
+	
+	* Reverse filtering works now
 
 == License ==
 
