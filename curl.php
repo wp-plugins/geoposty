@@ -77,7 +77,7 @@ function getGeoPostyWeather() {
 	$data = get_transient('geoWeather-' . $geoMD5);
 
 	if ($data === false) {
-		$data = wp_remote_retrieve_body(wp_remote_get('http://www.google.com/ig/api?hl=en&weather=' . $geoPosty['PostalCode']));
+		$data = wp_remote_retrieve_body(wp_remote_get('http://www.google.com/ig/api?hl=en&weather=' . urlencode($geoPosty['PostalCode'])));
 
 		$geoPostyWeatherXML = @simplexml_load_string($data);
 

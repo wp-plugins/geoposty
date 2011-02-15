@@ -106,11 +106,12 @@ Initial release
 
 0.9.4 December 3, 2010
 
-	* Reverse filtering works now
-
+	* Reverse filtering works now  
+	
 0.9.5 February 15, 2011
 
-  	* Fixed bug in weather widget triggering "Call to a member function attributes() on a non-object"
+	* Fixed bug in weather widget triggering "Call to a member function attributes() on a non-object"
+	
 
 == License ==
 
