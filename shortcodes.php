@@ -36,8 +36,7 @@ function geoContentFilter( $attributes, $output = null ) {
 		elseif (geoDistanceFrom($distancefrom) < $miles && $reverse) return false;
 	} elseif (!empty($locationtype)) {
 		$locationTest = geoLocationContent($locationtype, $location, $reverse);
-		if (!$locationTest && empty($reverse)) return false;
-		elseif ($locationTest && $reverse) return false;
+		if (!$locationTest) return false;
 	}
 
 	return do_shortcode($output);
