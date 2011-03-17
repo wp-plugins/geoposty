@@ -4,7 +4,7 @@ Contributors: Mobiah, mcinvale
 Tags: location, geolocation, geotargeting, geo, ip geolocation, geolocated content, geotargeted content, geomarketing, geocoding, geographic location, geotargeting radius, localized content, location widgets, marketing, fun, blog, website, site, awesome, best, nirvana
 Requires at least: 2.7
 Tested up to: 3.0.5
-Stable tag: 0.9.5
+Stable tag: 0.9.6
 
 Geoposty determines your visitor's location from their ip address, then displays dynamic content that is specific to their area.
 
@@ -112,7 +112,9 @@ Initial release
 
 	* Fixed bug in weather widget triggering "Call to a member function attributes() on a non-object"
 	
+0.9.6 March 17, 2011
 
+	* Reverse filtering now totally debugged hopefully
 == License ==
 
 Licensed under the GNU General Public License
