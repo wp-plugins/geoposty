@@ -112,7 +112,9 @@ Initial release
 
 	* Fixed bug in weather widget triggering "Call to a member function attributes() on a non-object"
 	
+0.9.6 March 17, 2011
 
+	* Reverse filtering now totally debugged hopefully
 == License ==
 
 Licensed under the GNU General Public License
