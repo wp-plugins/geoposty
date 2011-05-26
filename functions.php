@@ -75,7 +75,7 @@ function geoWeather($image, $measurement, $humidity, $wind) {
 
 	$output = '<span class="geoweather">';
 
-	if ($image == 'on') $output .= '<span class="geoposty-weather-image"><img src="http://www.google.com' . $weather->{weather}->{current_conditions}->{icon}->attributes()->data . '" alt="'.$weather->{weather}->{current_conditions}->{condition}->attributes()->data.'" /></span><br />';
+	if ($image == 'on') $output .= '<span class="geoposty-weather-image"><img src="' . $weather->{weather}->{current_conditions}->{icon}->attributes()->data . '" alt="'.$weather->{weather}->{current_conditions}->{condition}->attributes()->data.'" /></span><br />';
 	$output .= '<strong class="geoposty-weather-condition">' . $weather->{weather}->{current_conditions}->{condition}->attributes()->data . ', <span class="';
 
 	if ($measurement == 'Celcius') $output .= 'geopost-weather-celcius">' . $weather->{weather}->{current_conditions}->{temp_c}->attributes()->data;
