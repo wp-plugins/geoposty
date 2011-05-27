@@ -115,6 +115,11 @@ Initial release
 0.9.6 March 17, 2011
 
 	* Reverse filtering now totally debugged hopefully
+
+0.9.7 May 26, 2011
+
+	* Google Weather changed their API a little bit.  So we had to make a change.
+
 == License ==
 
 Licensed under the GNU General Public License
