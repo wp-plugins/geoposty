@@ -4,7 +4,7 @@ Contributors: Mobiah, mcinvale
 Tags: location, geolocation, geotargeting, geo, ip geolocation, geolocated content, geotargeted content, geomarketing, geocoding, geographic location, geotargeting radius, localized content, location widgets, marketing, fun, blog, website, site, awesome, best, nirvana
 Requires at least: 2.7
 Tested up to: 3.1.3
-Stable tag: 0.9.7
+Stable tag: 0.9.8
 
 Geoposty determines your visitor's location from their ip address, then displays dynamic content that is specific to their area.
 
@@ -119,6 +119,12 @@ Initial release
 0.9.7 May 26, 2011
 
 	* Google Weather changed their API a little bit.  So we had to make a change.
+
+0.9.8 June 23, 2011
+
+        * Google Weather changed their API *back to to the old image link format,o we had to make the change back.
+
+
 
 == License ==
 
