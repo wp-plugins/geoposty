@@ -8,7 +8,9 @@ Stable tag: 0.9.8
 
 Geoposty determines your visitor's location from their ip address, then displays dynamic content that is specific to their area.
 
-== Description ==
+== Description ==   
+
+IMPORTANT NOTE: The free GeoPosty API Web service, free support of the GeoPosty WordPress Plugin, and all related services will be discontinued — effective March 11, 2013. Details about alternative service options and continued plugin use are available here: http://www.geoposty.com/sunset-details/
 
 Geoposty shows each of your readers information that is unique to their location and relevant to your site.
 
@@ -38,7 +40,9 @@ A note about best practices: GeoPosty is not for spammers or other unsavory folk
 
 1. Geoposty weather widget
 
-== Installation ==
+== Installation ==  
+
+IMPORTANT NOTE: The free GeoPosty API Web service, free support of the GeoPosty WordPress Plugin, and all related services will be discontinued — effective March 11, 2013. Details about alternative service options and continued plugin use are available here: http://www.geoposty.com/sunset-details/  
 
 Step 1: Go to GeoPosty.com and enter your name, email, and the domain where you would like to use GeoPosty.
 Step 2: Go to GeoPosty.com/download and download the plugin files.
@@ -48,7 +52,9 @@ Step 3: Enter your API code on the GeoPosty Account page.
 Step 4: Manage and customize GeoPosty content from your Widgets section, or use shortcodes in your content
 
 
-== Frequently Asked Questions ==
+== Frequently Asked Questions ==  
+
+IMPORTANT NOTE: The free GeoPosty API Web service, free support of the GeoPosty WordPress Plugin, and all related services will be discontinued — effective March 11, 2013. Details about alternative service options and continued plugin use are available here: http://www.geoposty.com/sunset-details/
 
 Q: Where is my GeoPosty api key?
 A: Check your email.  If you do not see it there check your spam filter.  If you do not see it there contact us: support@geoposty.com.
@@ -122,7 +128,11 @@ Initial release
 
 0.9.8 June 23, 2011
 
-        * Google Weather changed their API *back to to the old image link format,o we had to make the change back.
+    * Google Weather changed their API *back to to the old image link format,o we had to make the change back.
+        
+0.9.9 Dec 3, 2012
+
+     * Documentation updated to reflect GeoPosty API discontinuation.  IMPORTANT NOTE: The free GeoPosty API Web service, free support of the GeoPosty WordPress Plugin, and all related services will be discontinued — effective March 11, 2013. Details about alternative service options and continued plugin use are available here: http://www.geoposty.com/sunset-details/     
 
 
 
@@ -135,4 +145,6 @@ Full text at: http://www.gnu.org/licenses/gpl.txt
 
 == Contact ==
 
-support@geoposty.com
+support@geoposty.com   
+
+IMPORTANT NOTE: The free GeoPosty API Web service, free support of the GeoPosty WordPress Plugin, and all related services will be discontinued — effective March 11, 2013. Details about alternative service options and continued plugin use are available here: http://www.geoposty.com/sunset-details/  
