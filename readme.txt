@@ -133,3 +133,5 @@ Full text at: http://www.gnu.org/licenses/gpl.txt
 == Contact ==
 
 support@geoposty.com
+
+
