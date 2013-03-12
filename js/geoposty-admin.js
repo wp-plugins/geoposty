@@ -10,7 +10,7 @@ jQuery(document).ready(function($) {
 		return false;
 	});
 
-	/*$('#geoposty-conf').live('submit', function() {
+	$('#geoposty-conf').live('submit', function() {
 		var geoKey = $('#geoPostyKey').val();
 		var geoTest = $('#geoPostyTest').val();
 		//console.debug('geoposty-conf geoKey=' + geoKey);
@@ -46,7 +46,7 @@ jQuery(document).ready(function($) {
 		});
 
 		return false;
-	});*/
+	});
 
 	$('.geoswitch > a').live('click',function() {
 		// what class are we working with?

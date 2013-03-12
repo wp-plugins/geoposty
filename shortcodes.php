@@ -6,7 +6,7 @@ add_shortcode('geocountry', 'geoCountry');
 add_shortcode('georegion', 'geoRegion');
 add_shortcode('geostate', 'geoState');
 add_shortcode('geocity', 'geoCity');
-add_shortcode('geopostalcode', 'geoPostalCode');
+//add_shortcode('geopostalcode', 'geoPostalCode');
 add_shortcode('geoareacode', 'geoAreaCode');
 add_shortcode('geolatitude', 'geoLatitude');
 add_shortcode('geolongitude', 'geoLongitude');

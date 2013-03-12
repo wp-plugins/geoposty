@@ -24,6 +24,8 @@ function geoposty_shortcodes(){
 			if (jQuery('#geoWidgetHeight').val() > 0) shortattr += ' height="'+ jQuery('#geoWidgetHeight').val() +'"';
 			if (jQuery('#geoWidgetResults').val() > 0) shortattr += ' results="'+ jQuery('#geoWidgetResults').val() +'"';
 			if (jQuery('#geoWidgetSearch').val() != '') shortattr += ' search="'+ jQuery('#geoWidgetSearch').val() +'"';
+			if (jQuery('#geoWidgetRadiusAddress').val() != '') shortattr += ' distancefrom="'+ jQuery('#geoWidgetRadiusAddress').val() +'"';
+			if (jQuery('#geoWidgetRadiusDistance').val() > 0) shortattr += ' miles="'+ jQuery('#geoWidgetRadiusDistance').val() +'"';
 			if (jQuery('#geoWidgetLocationType').val() != '') shortattr += ' locationtype="'+ jQuery('#geoWidgetLocationType').val() +'"';
 			if (jQuery('#geoWidgetLocation').val()  != '') shortattr += ' location="'+ jQuery('#geoWidgetLocation').val() +'"';
 			if (jQuery('#geoReverseSearch').is(':checked')) shortattr += ' reverse="flipit"';
@@ -33,22 +35,36 @@ function geoposty_shortcodes(){
 			if (jQuery('#geoWidgetHumidity').is(':checked')) shortattr += ' humidity="on"';
 			if (jQuery('#geoWidgetWind').is(':checked')) shortattr += ' wind="on"';
 			shortattr += ' measurement="'+ jQuery('#geoWidgetMeasurement').val() +'"';
+			if (jQuery('#geoWidgetRadiusAddress').val() != '') shortattr += ' distancefrom="'+ jQuery('#geoWidgetRadiusAddress').val() +'"';
+			if (jQuery('#geoWidgetRadiusDistance').val() > 0) shortattr += ' miles="'+ jQuery('#geoWidgetRadiusDistance').val() +'"';
 			if (jQuery('#geoWidgetLocationType').val() != '') shortattr += ' locationtype="'+ jQuery('#geoWidgetLocationType').val() +'"';
 			if (jQuery('#geoWidgetLocation').val()  != '') shortattr += ' location="'+ jQuery('#geoWidgetLocation').val() +'"';
 			if (jQuery('#geoReverseSearch').is(':checked')) shortattr += ' reverse="flipit"';
 
 		} else if (shortoptgroup == 'Location Content Filtering') {
+			if (jQuery('#geoWidgetRadiusAddress').val() != '') shortattr += ' distancefrom="'+ jQuery('#geoWidgetRadiusAddress').val() +'"';
+			if (jQuery('#geoWidgetRadiusDistance').val() > 0) shortattr += ' miles="'+ jQuery('#geoWidgetRadiusDistance').val() +'"';
 			if (jQuery('#geoWidgetLocationType').val() != '') shortattr += ' locationtype="'+ jQuery('#geoWidgetLocationType').val() +'"';
 			if (jQuery('#geoWidgetLocation').val()  != '') shortattr += ' location="'+ jQuery('#geoWidgetLocation').val() +'"';
 			if (jQuery('#geoReverseSearch').is(':checked')) shortattr += ' reverse="flipit"';
 		} 
-
+		// PRIMER '1' FOR ADDED CODE M PILON
+		  else if (shortoptgroup == 'Redirection Shortcodes') {
+			if (jQuery('#destinationPage').val()  != '') shortattr += ' redirectpage="' + jQuery('#destinationPage').val() + '"';
+			if (jQuery('input:radio[name=redirectType]:checked').val() != '') shortattr += ' redirecttype="' + jQuery('input:radio[name=redirectType]:checked').val() + '"';
+			if (jQuery('#redirectURL').val() != '') shortattr += ' redirecturl="'+ jQuery('#destinationURL').val() +'"';
+			if (jQuery('#geoWidgetRadiusAddress').val() != '') shortattr += ' distancefrom="'+ jQuery('#geoWidgetRadiusAddress').val() +'"';
+			if (jQuery('#geoWidgetRadiusDistance').val() > 0) shortattr += ' miles="'+ jQuery('#geoWidgetRadiusDistance').val() +'"';
+		}
+		// BELOW ADDED BY M PILON 6/24/2010
 		
 		// reset input elements
 		jQuery('#geoWidgetWidth, #geoWidgetHeight, #geoWidgetSearch, #geoWidgetRadiusAddress, #add_geo_shortcode').attr('value', '');
 		jQuery('#geoMapOptions').slideUp();
+		jQuery('#geoRadiusLimit').slideUp();
 		jQuery('#geoLocationLimit').slideUp();
 		jQuery('#geoWeatherOptions').slideUp();
+		jQuery('#geoRedirectOptions').slideUp();
 		jQuery('#geoLocalizedContent').slideUp();	
 		jQuery('#geoReverse').slideUp();
 
@@ -68,6 +84,7 @@ function geoposty_shortcodes(){
 
 		if (shortoptgroup == 'Google Based Shortcodes') {
 			jQuery('#geoMapOptions').slideDown();
+			jQuery('#geoRadiusLimit').slideDown();
 			jQuery('#geoLocationLimit').slideDown();
 			jQuery('#geoReverse').slideDown();
 			jQuery('#geoLocalizedContent').slideUp();
@@ -75,6 +92,7 @@ function geoposty_shortcodes(){
 			jQuery('#geoRedirectOptions').slideUp();
 		} else if (shortoptgroup == 'Weather Based Shortcodes') {
 			jQuery('#geoMapOptions').slideUp();
+			jQuery('#geoRadiusLimit').slideDown();
 			jQuery('#geoLocationLimit').slideDown();
 			jQuery('#geoReverse').slideDown();
 			jQuery('#geoWeatherOptions').slideDown();
@@ -82,6 +100,7 @@ function geoposty_shortcodes(){
 			jQuery('#geoRedirectOptions').slideUp();
 		} else if (shortoptgroup == 'Location Content Filtering') {
 			jQuery('#geoMapOptions').slideUp();
+			jQuery('#geoRadiusLimit').slideDown();
 			jQuery('#geoLocationLimit').slideDown();
 			jQuery('#geoReverse').slideDown();
 			jQuery('#geoLocalizedContent').slideDown();
@@ -89,6 +108,7 @@ function geoposty_shortcodes(){
 			jQuery('#geoRedirectOptions').slideUp();
 		} else if (shortoptgroup == 'Redirection Shortcodes') {
 			jQuery('#geoMapOptions').slideUp();
+			jQuery('#geoRadiusLimit').slideDown();
 			jQuery('#geoLocationLimit').slideDown();
 			jQuery('#geoReverse').slideDown();
 			jQuery('#geoLocalizedContent').slideUp();
@@ -96,6 +116,7 @@ function geoposty_shortcodes(){
 			jQuery('#geoRedirectOptions').slideDown();
 		} else {
 			jQuery('#geoMapOptions').slideUp();
+			jQuery('#geoRadiusLimit').slideUp();
 			jQuery('#geoLocalizedContent').slideUp();
 			jQuery('#geoLocationLimit').slideUp();
 			jQuery('#geoReverse').slideUp();
@@ -137,6 +158,12 @@ function geoposty_shortcodes(){
 				<optgroup label="Weather Based Shortcodes">
 					<option value="geoweather">Weather</option>
 				</optgroup>
+				<!-- below added by M PILON 6/25/2010 
+				<optgroup label="Redirection Shortcodes">
+						<option value="georredirect">Radius Based Redirect</option>
+				</optgroup>
+				-->
+				
 
 			</select> <br/>
 		    </div>
@@ -165,6 +192,30 @@ function geoposty_shortcodes(){
 				<input type="checkbox" id="geoWidgetWind"  /> <label for="geoWidgetWind"><?php _e("Wind"); ?></label><br />
 				<select id="geoWidgetMeasurement"><option value="Fahenheit">Fahenheit</option><option value="Celsuis">Celsius</option> </select> <label for="geoWidgetMeasurement"><?php _e("Measurement"); ?></label><br />
 			</div>
+
+			<div id="geoRadiusLimit" style="display:none;padding:0 15px">
+				<h4 class="geoswitch"><a href="#" class="geoWidgetRadius">Radius Based Filtering</a> <em>Will display to visitors near a certain location</em></h4>
+
+				<div class="geoWidgetRadius" style="display:none;">
+
+					<p>This feature is only enabled for US locations at this time.</p>
+
+					<label for="geoWidgetRadiusDistance"><?php _e("Show this item to people who are within"); ?></label> <select id="geoWidgetRadiusDistance">
+						<option></option>
+						<option>50</option>
+						<option>100</option>
+						<option>200</option>
+						<option>500</option>
+						<option>1000</option>
+						<option>1500</option>
+						<option>5000</option>
+					</select>  miles <br />
+
+					of <input type="text" id="geoWidgetRadiusAddress" class="regular-text"  /><br />
+					<label for="geoWidgetRadiusAddress"><em><?php _e("This must be in the form <strong>City Name, ST</strong>."); ?></em></label><br />
+
+				</div>	
+			</div>
 			
 			<div id="geoLocationLimit" style="display:none;padding:0 15px;">
 				<h4 class="geoswitch"><a href="#" class="geoWidgetLocation">Location Based Filtering</a> <em>Will display to visitors in the location that you name</em></h4>
@@ -182,7 +233,7 @@ function geoposty_shortcodes(){
 
 					of <input type="text" id="geoWidgetLocation" class="regular-text"  /><br />
 
-					<p><a href="https://www.usps.com/ship/official-abbreviations.htm" target="_blank">Use the USPS 2-letter code for US states</a><br />
+					<p><a href="http://www.usps.com/ncsc/lookups/usps_abbreviations.html" target="_blank">Use the USPS 2-letter code for US states</a><br />
 					<a href="http://www.iso.org/iso/english_country_names_and_code_elements" target="_blank">Use the ISO 2-letter code for countries</a></p>
 				</div>
 
@@ -243,23 +294,22 @@ function geo_ajax_followup() {
 	// WARN current_user user_email: assumes that my local email here is same as email I typed on geoposty.com to get api key
 	$geoRequestURL = GEOSERVER . 'domain='. $_SERVER['HTTP_HOST'] .'&email='. $current_user->user_email .'&confirm=1';
 	$data = trim(wp_remote_retrieve_body(wp_remote_get($geoRequestURL)));
-	if(GDEBUG) { error_log("geoposty:admin:geo_ajax_followup url=$geoRequestURL data=$data geoposty_neustar_api_key=$geoposty_neustar_api_key"); }
+	if(GDEBUG) { error_log("geoposty:admin:geo_ajax_followup url=$geoRequestURL data=$data geoposty_api_key=$geoposty_api_key"); }
 	echo $data;
 	die();
 }
 
 add_action('admin_menu', 'geoposty_config_page');
 function geoposty_config_page() {
-	global $posty_plugin_url, $geoposty_neustar_api_key;
+	global $posty_plugin_url, $geoposty_api_key;
 
 	if ( function_exists('add_menu_page') ) {
-		add_menu_page(__('GeoPosty Options'), __('GeoPosty'), 'manage_options', 'geoposty-options', 'geoposty_conf', $posty_plugin_url . '/images/icon.png');
+		add_menu_page(__('GeoPosty Account Manager'), __('GeoPosty'), 'manage_options', 'geoposty-key-config', 'geoposty_conf', $posty_plugin_url . '/images/icon.png');
 
-		if (!empty($geoposty_neustar_api_key)) {
-			add_submenu_page( 'geoposty-options', __('API Key'), __('API Key'), 'manage_options', 'geoposty-options', 'geoposty_conf');
-			add_submenu_page( 'geoposty-options', __('GeoPosty Redirects'), __('Redirects'), 'manage_options', 'geoposty-redirects', 'geoRedirectsConfig');
-			add_submenu_page( 'geoposty-options', __('GeoPosty Cache'), __('Empty GeoCache'), 'manage_options', 'geoposty-geocache', 'geoposty_empty_geocache');
-			add_submenu_page( 'geoposty-options', __('GeoPosty Readme'), __('Help'), 'manage_options', 'geoposty-readme', 'geopostyReadme');
+		if (!empty($geoposty_api_key)) {
+			add_submenu_page( 'geoposty-key-config', __('GeoPosty Account Manager'), __('Config &amp; Stats'), 'manage_options', 'geoposty-key-config', 'geoposty_conf');
+			add_submenu_page( 'geoposty-key-config', __('GeoPosty Redirects'), __('Redirects'), 'manage_options', 'geoposty-redirects', 'geoRedirectsConfig');
+			add_submenu_page( 'geoposty-key-config', __('GeoPosty Readme'), __('Help'), 'manage_options', 'geoposty-readme', 'geopostyReadme');
 		}
 	}
 }
@@ -333,8 +383,33 @@ window.onbeforeunload = function() {
 				<label for="geoRedirectDestination">will be redirected to this url:</label><br />
 				<input type="text" id="geoRedirectDestination" class="geoLongText" name="geoRedirects[0][destination]" value="<?php echo get_option('siteurl'); ?>/" /></p></td>
 				<td valign="top">
-				    
-					<div class="geoWidgetLocation">
+
+					<h4 class="geoswitch"><a href="#" class="geoWidgetRadius">Radius Based Filtering</a></h4>
+
+					<div class="geoWidgetRadius" style="display:none;">
+
+						<p>This feature is only enabled for US locations at this time.</p>
+
+						<label for="geoWidgetRadiusDistance"><?php _e("Show this item to people who are within"); ?></label> <select name="geoRedirects[0][radius]" id="geoWidgetRadiusDistance">
+							<option></option>
+							<option>50</option>
+							<option>100</option>
+							<option>200</option>
+							<option>500</option>
+							<option>1000</option>
+							<option>1500</option>
+							<option>5000</option>
+						</select>  miles <br />
+
+						of <input type="text" name="geoRedirects[0][radiuslocation]" id="geoWidgetRadiusAddress" class="regular-text"  /><br />
+						<label for="geoWidgetRadiusAddress"><em><?php _e("This must be in the form <strong>City Name, ST</strong>."); ?></em></label><br />
+
+
+					</div>	
+			
+					<h4 class="geoswitch"><a href="#" class="geoWidgetLocation">Location Based Filtering</a></h4>
+
+					<div class="geoWidgetLocation" style="display:none;">
 						<label for="geoWidgetLocationType"><?php _e("Show this item to people who are in the"); ?></label>	
 						<select id="geoWidgetLocationType" name="geoRedirects[0][location]">
 							<option></option>
@@ -347,7 +422,7 @@ window.onbeforeunload = function() {
 
 						of <input type="text" id="geoWidgetLocation" class="regular-text" name="geoRedirects[0][locationaddress]"  /><br />
 
-						<p><a href="https://www.usps.com/ship/official-abbreviations.htm" target="_blank">Use the USPS 2-letter code for US states</a><br />
+						<p><a href="http://www.usps.com/ncsc/lookups/usps_abbreviations.html" target="_blank">Use the USPS 2-letter code for US states</a><br />
 						<a href="http://www.iso.org/iso/english_country_names_and_code_elements" target="_blank">Use the ISO 2-letter code for countries</a></p>
 					</div>
 
@@ -461,6 +536,32 @@ function geoCachingPlugins() {
 }
 
 
+function geoStatsGraph($type, $count) {
+	$geoDailyStats = geoAdminStats($type);
+	$geoMaxDay = 0;
+	$geoDayCount = 0;
+
+	foreach ($geoDailyStats as $geoDay) {
+		$geoDayCount++;
+		if ($geoDayCount == $count) break;
+		if ($type == 'd') {
+			$arrayGeoStats[] = $geoDay['1'];
+			$arrayGeoDays[] = date('m-d', strtotime($geoDay['0']));
+			if ($geoMaxDay < $geoDay['1']) $geoMaxDay = $geoDay['1'];
+		} else {
+			$arrayGeoStats[] = $geoDay['2'];
+			$arrayGeoDays[] = $geoDay['0'];
+			if ($geoMaxDay < $geoDay['2']) $geoMaxDay = $geoDay['2'];
+		}
+	}
+
+	$displayGeoStats = @array_reverse($arrayGeoStats);
+	$displayGeoDays = @array_reverse($arrayGeoDays);
+
+	$graph = 'http://chart.apis.google.com/chart?cht=lc&chs=800x300&chco=217297&chd=t:'. @implode($displayGeoStats, ',') .'&chxt=y,x&chxr=0,0,'. $geoMaxDay .'&chds=0,'. $geoMaxDay .'&chxl=1:|'. @implode($displayGeoDays, '|');
+	return $graph;
+}
+
 function geoposty_conf() {
 
 	if ( isset($_POST['submit']) ) {
@@ -469,15 +570,16 @@ function geoposty_conf() {
 
 		// check_admin_referer( $geoposty_nonce );
 		$key = trim($_POST['geoPostyKey']);
-		$secret = trim($_POST['geoPostySecret']);
 		if(GDEBUG) { error_log("geoposty:admin:geoposty_conf key=:$key:"); }
 
-		if ( empty($key) ) { delete_option('geoposty_neustar_api_key'); } 
-		if ( empty($secret) ) { delete_option('geoposty_neustar_api_secret'); } 
+		// reset our cache for testing!
+		// this isn't permanent
+		reset_geo_cache();
+
+		if ( empty($key) ) { delete_option('geoposty_api_key'); } 
 		else { 
-			update_option('geoposty_neustar_api_key', $key); 
-			update_option('geoposty_neustar_api_secret', $secret); 
-			$sname = "admin.php?page=geoposty-readme&geokeysaved=1";
+			update_option('geoposty_api_key', $key); 
+			$sname = "admin.php?page=geoposty-readme";
 			if(GDEBUG) { error_log("geoposty:admin:geoposty_conf update_option : saving key to database sname=$sname"); }
 			// jump to help page for first time user
 			?>
@@ -487,15 +589,14 @@ function geoposty_conf() {
 	}
 
 	// don't use global here
-	$geoposty_neustar_api_key = get_option('geoposty_neustar_api_key');
-	$geoposty_neustar_api_secret = get_option('geoposty_neustar_api_secret');
-	if(GDEBUG) { error_log("geoposty:admin:geoposty_conf api_key=:$geoposty_neustar_api_key:"); }
+	$geoposty_api_key = get_option('geoposty_api_key');
+	if(GDEBUG) { error_log("geoposty:admin:geoposty_conf api_key=:$geoposty_api_key:"); }
 ?>
 <?php if ( !empty($_POST['submit'] ) ) : ?>
 	<div id="message" class="updated fade">
-		<p><strong><?php _e('Information saved. This page will automatically refresh to get you the most recent information. <a href="'.$_SERVER['SCRIPT_NAME'].'?page=geoposty-options">You can manually reload.</a>') ?></strong></p>
+		<p><strong><?php _e('Information saved. This page will automatically refresh to get you the most recent information. <a href="'.$_SERVER['SCRIPT_NAME'].'?page=geoposty-key-config">You can manually reload.</a>') ?></strong></p>
 	</div>
-	<script type="text/javascript">window.location = '<?php echo $_SERVER['SCRIPT_NAME']; ?>?page=geoposty-options';</script>
+	<script type="text/javascript">window.location = '<?php echo $_SERVER['SCRIPT_NAME']; ?>?page=geoposty-key-config';</script>
 <?php 
 	return;
 	endif;
@@ -510,17 +611,76 @@ function geoposty_conf() {
 ?>
 
 <div class="wrap">
-	<h2><?php _e('Neustar IP Intelligence API Key'); ?></h2>
+	<h2><?php _e('GeoPosty Configuration'); ?></h2>
 	<div class="tool-box">
 <?php
-	if (!empty($geoposty_neustar_api_key)) {
+	if (!empty($geoposty_api_key)) {
 	
-	   
+	$geoAdminSummary = geoAdminStats('s');
+	$geoAdminSubscription = geoAdminStats('p');
+	$subserver = SERVER . 'isubs.php?domainkey=' . $geoposty_api_key . '&domain=' . $_SERVER['HTTP_HOST'];
+	$host = $_SERVER['HTTP_HOST'];
+	if(GDEBUG) { error_log("geoposty:admin:geoposty_conf host=$host : subserver=$subserver"); }
+
+	if ($geoAdminSubscription[0][2] > 1) {
+		// subscribed!
+?>
+		<h3><?php echo number_format(($geoAdminSummary['0']['2']/$geoAdminSummary['0']['1'])*100); ?>% of lookups used for this subscription period.</h3>
+
+		<iframe src="<?php echo $subserver; ?>" width="400" height="150" style="display:none;" class="alignright" id="geoChangeiframe"></iframe>
+
+		<p><strong>Subscription Information</strong><br />
+		Monthly Subscription: <?php echo number_format($geoAdminSubscription[0][2]); ?> lookups/month for $<?php echo number_format($geoAdminSubscription[0][0], 2); ?>  <a href="#" id="geoChangeSubscription">Change</a><br />
+		Month Start Day: <?php echo $geoAdminSubscription[0][1]; ?>
+		</p>
+
+<?php
+	} else {
+		// not subscribed!
+		if($host == 'localhost') {
+?>
+		<h2>You are using a LOCALHOST test key.</h2>
+		<h3>When moving to your live server, you MUST install the Geoposty plugin there in order to get a live key</h3>
+<?php
+		}
+		else {
+?>
+		<iframe src="<?php echo $subserver?>" width="400" height="150" class="alignright"></iframe>
+		<h3>You have used <?php echo $geoAdminSummary['0']['2']; ?> of your 10,000 free* lookups this month!</h3>
+
+		
+<?php
+		}
 	}
 
-	if (empty($geoposty_neustar_api_key)) { 
+
+	if($host == 'localhost') { }
+	else {
+?>
+
+
+			<h3>GeoPosty Usage</h3>
+
+			<h4 style="float:left;margin-right:10px;"><a href="#" id="geoDailyLink">Daily Usage</a></h4> 
+			<h4 style="float:left;margin-right:10px;"><a href="#" id="geoWeeklyLink">Weekly Usage</a></h4> 
+			<h4 style="float:left;margin-right:10px;"><a href="#" id="geoMonthlyLink">Monthly Usage</a></h4> 
+
+			<div style="width:800px;height:300px;clear:both;" id="geoGraphsWrapper">
+				<img src="<?php echo geoStatsGraph('d', '21'); ?>" alt="Daily Usage" id="geoDailyGraph" />
+				<img src="<?php echo geoStatsGraph('w', '10'); ?>" alt="Weekly Usage" id="geoWeeklyGraph" style="display:none;" />
+				<img src="<?php echo geoStatsGraph('m', '6'); ?>" alt="Monthly Usage" id="geoMonthlyGraph" style="display:none;" />
+			</div>
+
+
+
+
+<?php
+		}
+	}
+
+	if (empty($geoposty_api_key)) { 
 		echo '<p>Hello, new GeoPosty user! Let\'s get you set up to start putting localized content on your site!</p>';
-    }
+
 		$geoposty_tests = get_option('geoposty_tests');
 
 		if (empty($geoposty_tests)) {
@@ -529,7 +689,7 @@ function geoposty_conf() {
 			if (version_compare(phpversion(), "5.0", ">=")) $geoPHPTest = ' class="geopass"';
 			if (function_exists(simplexml_load_string)) $geoXMLTest = ' class="geopass"';
 			if (function_exists(json_decode)) $geoJSONTest = ' class="geopass"';
-			if (wp_remote_retrieve_response_code(wp_remote_get(GEOSERVER . GEOSERVER_VERSION . GEOSERVER_METHOD)) == '403') $geoRemoteAPI = ' class="geopass"'; 
+			if (wp_remote_retrieve_response_code(wp_remote_get(SERVER)) == '200') $geoRemoteAPI = ' class="geopass"';
 
 ?>
 			<dl class="geoTests">
@@ -546,103 +706,59 @@ function geoposty_conf() {
 			if (!empty($geoPHPTest) && !empty($geoXMLTest) && !empty($geoJSONTest) && !empty($geoRemoteAPI)) {
 				add_option('geoposty_tests', 'Great success!!');
 ?>
-				<h2 class="geoSuccess">Success! You can run GeoPosty on your server. <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?page=geoposty-options">Continue to configuration</a></h2>
+				<h2 class="geoSuccess">Success! You can run GeoPosty on your server. <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?page=geoposty-key-config">Continue to configuration</a></h2>
 <?php	
 			}
-		}  
-	 
+		} 
 		else {
 ?>
 			<form action="" method="post" id="geoposty-conf" >
 
 				<input type="hidden" id="geoPostyTest" value="" />
 
-				<table class="form-table" >
+				<table class="form-table">
 					<tr>
-						<th scope="row"><label for="geoPostyKey">API Key:</label></th>
-						<td><input id="geoPostyKey" name="geoPostyKey" type="text" class="regular-text" value="<?php echo $geoposty_neustar_api_key; ?>" /></td>
-					</tr>
-					<tr>
-						<th scope="row"><label for="geoPostySecret">API Secret:</label></th>
-						<td><input id="geoPostySecret" name="geoPostySecret" type="text" class="regular-text" value="<?php echo $geoposty_neustar_api_secret; ?>" /></td>
+						<th scope="row"><label for="geoPostyKey">First, enter your key here:</label></th>
+						<td><input id="geoPostyKey" name="geoPostyKey" type="text" class="regular-text" value="<?php echo $geoposty_api_key; ?>" /></td>
 					</tr>
 
 					<tr>
 						<td colspan="2" class="aligncenter">
 <?php 
-	    //if (empty($geoposty_neustar_api_key)) {
-		    echo '<a href="http://developer.quova.com/member/register" target="_blank">Get Neustar IP Intelligence API Key/Secret</a>'; 
-	    //}
+	if (empty($geoposty_api_key)) {
+		if($_SERVER['HTTP_HOST'] == 'localhost') { echo '<a href="http://geoposty.com/request-geoposty-localhost-development-key/" target="_blank">Request a <b>LOCALHOST</b> test API key</a>'; }
+		else { echo '<a href="http://geoposty.com/request-your-api-key/" target="_blank">Request an API key</a>'; }
+	}
 ?>
 						<div id="geoKeyReply"></div></td>
 					</tr>
 				</table>
 
-			<p class="submit"><input type="submit" id="geosubmit" class="button-primary" name="submit" value="Save Key/Secret &raquo;" /></p>
+			<p class="submit"><input type="submit" id="geosubmit" class="button-primary" name="submit" value="Test Your Key &raquo;" /></p>
 			</form>
 <?php
 		}
-   
+	}
 ?>
 
 
 	</div><!-- narrow -->
 </div><!-- wrap -->
 <?php
-}  
-
-function geoposty_empty_geocache() {   
-?>    
-    <div class="wrap">
-    	<h2><?php _e('Empty GeoCache'); ?></h2>
-    	<div class="tool-box">
-    	    <p>Visitor IP information is stored for 24 hours to optimize page loads and preserve Neustar API calls.  If for whatever reason you would like to purge your GeoPosty visitor  cache, you may do so here:</p>    
-    	    
-    	    <form action="" method="post" id="geoposty-flush-geocache" >  
-<?php
-
-                wp_nonce_field( 'geocache_flush','geocache_flush_nonce' );       
-
-?>    	        
-                <p class="submit"><input type="submit" id="geocachesubmit" class="button-primary" name="geocachesubmit" value="Flush GeoCache &raquo;" /></p>
-            </form>
-    	    
-<?php           
-
-           
-            if ( isset( $_POST['geocachesubmit'] ) && check_admin_referer( 'geocache_flush','geocache_flush_nonce' ) ) {
-                reset_geo_cache();
-            }   
-
-?>
-    	</div>
-    </div>
-<?php
 }
+
+
 
 // this isn't permanent
 function reset_geo_cache() {
-	
-	global $wpdb;     
-	
+	global $wpdb;
+
 	// is there not a built in way to do this?
 	$facestransients = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE '%_transient_geo%'" );
-                               
-    echo '<p>Emptying ' . count( $facestransients ) . ' cached entries from database...</p>';
 
 	foreach ($facestransients as $trans) {
 		$deleteTransient = str_replace('_transient_' , '', $trans->option_name);
 		delete_transient($deleteTransient);
-	}                                                                  
-	
-	echo '<p>Finished!</p>';
-	
-} 
-
-
-
-
-
-
-
+	}
+}
 ?>

@@ -3,20 +3,22 @@
 Contributors: Mobiah, mcinvale
 Tags: location, geolocation, geotargeting, geo, ip geolocation, geolocated content, geotargeted content, geomarketing, geocoding, geographic location, geotargeting radius, localized content, location widgets, marketing, fun, blog, website, site, awesome, best, nirvana
 Requires at least: 2.7
-Tested up to: 3.5
-Stable tag: 1.0.1
+Tested up to: 3.1.3
+Stable tag: 0.9.9
 
 Geoposty determines your visitor's location from their ip address, then displays dynamic content that is specific to their area.
 
-== Description ==
+== Description ==   
 
-IMPORTANT NOTE: The free GeoPosty API Web service, free support of the GeoPosty WordPress Plugin, and all related services has been discontinued — effective March 11, 2013. Details about alternative service options and continued plugin use are available here: http://www.geoposty.com/sunset-details/
+IMPORTANT NOTE: The free GeoPosty API Web service, free support of the GeoPosty WordPress Plugin, and all related services will be discontinued — effective March 11, 2013. Details about alternative service options and continued plugin use are available here: http://www.geoposty.com/sunset-details/
 
-This plugin has been patched to connect to the Neustar Developer IP Intelligence service.  
+Geoposty shows each of your readers information that is unique to their location and relevant to your site.
 
-All existing users looking to continue the practice of geolocation should install this patch.  
+First, we combine your user's IP address with the world's most accurate database of geolocation IP information.  Next, we use your custom search term/text/point of interest and combine it with reliable APIs from Google and others.  Mix it all together and you get the most relevant, personalized, location-specific content that ever made a WordPress user happy.
 
-All new users may sign up and work with Neustar directly.
+The geolocation data used by this plugin--provided by Quova, Inc.--is free until further notice.  Heavy data usage is subject to capping. 
+
+As of this release, you can insert dynamic content items or shortcodes into pages or posts, and control who sees them based on their location or distance from a location. Additionally, there are four sidebar widgets to choose from, and you can have any number or combination of them active on your site at any time.
 
 Features (pages/posts/widgets):
 *Insert local weather
@@ -24,6 +26,7 @@ Features (pages/posts/widgets):
 *Insert Shortcodes: These are geo-ip-specific fields that will dynamically populate accurately for your visitor's location, as indicated by their ip address [1]
 *Insert localized content
 *Location-based display settings: You can customize who sees what content, based on their actual location (state, city, zip, metro area, etc.)
+*Radius-based display settings: You can customize who see what content, based on their distance from a location (address) that you indicate.
 *Redirect and display settings: You can set up redirects based on the location of your user.
 
 Additional Widget:
@@ -37,26 +40,39 @@ A note about best practices: GeoPosty is not for spammers or other unsavory folk
 
 1. Geoposty weather widget
 
-== Installation ==
+== Installation ==  
 
-IMPORTANT NOTE: The free GeoPosty API Web service, free support of the GeoPosty WordPress Plugin, and all related services has been discontinued — effective March 11, 2013. Details about alternative service options and continued plugin use are available here: http://www.geoposty.com/sunset-details/
+IMPORTANT NOTE: The free GeoPosty API Web service, free support of the GeoPosty WordPress Plugin, and all related services will be discontinued — effective March 11, 2013. Details about alternative service options and continued plugin use are available here: http://www.geoposty.com/sunset-details/  
 
-Step 1: Go to <a href="https://ipintelligence.neustar.biz/apps/registration?CL=gp.od.dev.nsr"> Neustar's Developer site</a> and complete the registration.  
-Step 2: Download the plugin files or install directly from WordPress menu.
-Step 3: Activate the plugin through the 'Plugins' menu in WordPress 
-Step 4: Enter your API code and Secret Key from Account Tab of the the Neustar Developer website.
-Step 5: Use plugin features in the content editor, widgets, and redirections.
+Step 1: Go to GeoPosty.com and enter your name, email, and the domain where you would like to use GeoPosty.
+Step 2: Go to GeoPosty.com/download and download the plugin files.
+Step 3: Upload the wp-geoposty folder to the `/wp-content/plugins/` directory
+Step 4: Activate the plugin through the 'Plugins' menu in WordPress
+Step 3: Enter your API code on the GeoPosty Account page.
+Step 4: Manage and customize GeoPosty content from your Widgets section, or use shortcodes in your content
 
 
-== Frequently Asked Questions ==
+== Frequently Asked Questions ==  
 
-IMPORTANT NOTE: The free GeoPosty API Web service, free support of the GeoPosty WordPress Plugin, and all related services has been discontinued — effective March 11, 2013. Details about alternative service options and continued plugin use are available here: http://www.geoposty.com/sunset-details/
+IMPORTANT NOTE: The free GeoPosty API Web service, free support of the GeoPosty WordPress Plugin, and all related services will be discontinued — effective March 11, 2013. Details about alternative service options and continued plugin use are available here: http://www.geoposty.com/sunset-details/
 
-Q: Is there support for this plugin?
-A: This plugin is being offered as a means to allow users of the GeoPosty API (2010-2013) to continue using geolocation without a service interruption.  No free support is offered post this transition.  We recommend soliciting help from your local webdev professional.  
+Q: Where is my GeoPosty api key?
+A: Check your email.  If you do not see it there check your spam filter.  If you do not see it there contact us: support@geoposty.com.
 
-Q: Can I get paid support for this patch or geolocation direct from the authors?
-A: Paid support can be purchased via the contact form on the GeoPosty website.
+Q: Where is the GeoPosty shortcode editor?
+A: It is located in the page and post editor.  Look for the globe icon in the wysiwyg editor.
+
+Q: What does a properly formatted GeoPosty redirect url look like?
+A: **For the "Visitors to this url:" box, enter only the portion of the address after your domain name.  For example, to redirect visitors from your http://www.yourdomain.com/about/ page, only enter "/about/" into the "Visitors to this url:" box.  
+
+**For the "will be directed to this url:" box, enter the full URL no matter what domain the destination url is on (e.g. "http://www.yourdomain.com/texas/" or "http://www.volvo-north-america.com")
+
+Q: Can I try out GeoPosty on my local machine?
+A: Yes. When installing the geoposty plugin on localhost, you will automatically receive a localhost API test key. When you are ready to move geoposty to your real server, just make sure to reinstall Geoposty on your server to obtain the correct API key for your domain.
+
+== Upgrade Notice ==
+
+Version 0.8 is the first full version to be released.  Anyone who tried to download GeoPosty before 8/9/2010 from the repository would not have succeeded as the first version was pulled from the repository immediately for API retooling and other massive power boosts.  If you are one who tried to download before this date, we are sorry for the inconvenience, but if you are reading this we are so glad you persevered this far!  We hope you enjoy this plugin!!!
 
 == Changelog ==
 
@@ -112,15 +128,12 @@ Initial release
 
 0.9.8 June 23, 2011
 
-        * Google Weather changed their API *back to to the old image link format,o we had to make the change back.
+    * Google Weather changed their API *back to to the old image link format,o we had to make the change back.
+        
+0.9.9 Dec 3, 2012
 
-1.0 February 4, 2012
+     * Documentation updated to reflect GeoPosty API discontinuation.  IMPORTANT NOTE: The free GeoPosty API Web service, free support of the GeoPosty WordPress Plugin, and all related services will be discontinued — effective March 11, 2013. Details about alternative service options and continued plugin use are available here: http://www.geoposty.com/sunset-details/     
 
-        * Transitioned GeoPosty to Neustar Intelligence API.
-
-1.0.1 February 4, 2012
-
-        * Fixed country code issue.
 
 
 == License ==
@@ -132,4 +145,6 @@ Full text at: http://www.gnu.org/licenses/gpl.txt
 
 == Contact ==
 
-support@geoposty.com
+support@geoposty.com   
+
+IMPORTANT NOTE: The free GeoPosty API Web service, free support of the GeoPosty WordPress Plugin, and all related services will be discontinued — effective March 11, 2013. Details about alternative service options and continued plugin use are available here: http://www.geoposty.com/sunset-details/  

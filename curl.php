@@ -1,7 +1,7 @@
 <?php
 
 function getGeoPosty() {
-	global $geoMD5, $geoposty_neustar_api_key, $geoposty_neustar_api_secret;
+	global $geoMD5, $geoposty_api_key;
 
 	if (!geoSpiderDetect()) return false;
 
@@ -12,13 +12,8 @@ function getGeoPosty() {
 		// should replace the _SERVER variables (or at least do a bunch of checking on them).  also add some better error checking
 
 		$ip = getGeoIpAddress();
-		$timestamp = gmdate('U'); // 1200603038
-		$sig = md5($geoposty_neustar_api_key  . $geoposty_neustar_api_secret . $timestamp);
-		//$server = GEOSERVER .'domain='. $host .'&ip='. $ip .'&domainkey=' . $geoposty_neustar_api_key;
-		$server = GEOSERVER . GEOSERVER_VERSION . GEOSERVER_METHOD . $ip .'/?apikey=' . $geoposty_neustar_api_key . '&sig=' . $sig . '&format=xml';
-		
-		/*$service . $ver. $method. $ipin . '?apikey=' .
-             $apikey . '&sig='.$sig . '&format=xml'*/
+		$host = $_SERVER['HTTP_HOST'];
+		$server = GEOSERVER .'domain='. $host .'&ip='. $ip .'&domainkey=' . $geoposty_api_key;
 		if(GDEBUG) { error_log("geoposty:curl:getGeoPosty ip=$ip server=$server"); }
 		$data = wp_remote_retrieve_body(wp_remote_get($server));
 		$geoPostyXML = @simplexml_load_string($data);
@@ -43,23 +38,20 @@ function getGeoPosty() {
 		// convert the simpleXML object to an array
 		// can't serialize PHP built-in objects :(
 		// fix case
-		
-		//print_r( $geoPostyXML );
-		
 		$geoPosty = array(
-			'IPAddress' => (string)$geoPostyXML->{ip_address},
-			'Carrier' => ucwords($geoPostyXML->{Network}->{carrier}),
-			'Continent' => ucwords($geoPostyXML->{Location}->{continent}),
-			'Country' => strtoupper($geoPostyXML->{Location}->{CountryData}->{country_code}),  
-			'Region' => ucwords($geoPostyXML->{Location}->{region}),
-			'State' => strtoupper($geoPostyXML->{Location}->{StateData}->{state_code}),
-			'City' => ucwords($geoPostyXML->{Location}->{CityData}->{city}),
-			'PostalCode' => (string)$geoPostyXML->{Location}->{CityData}->{postal_code},
-			'AreaCode' => (string)$geoPostyXML->{Location}->{CityData}->{area_code},
-			'Latitude' => (string)$geoPostyXML->{Location}->{latitude},
-			'Longitude' => (string)$geoPostyXML->{Location}->{longitude}
+			'IPAddress' => (string)$geoPostyXML->{IPAddress},
+			'Carrier' => ucwords($geoPostyXML->{Network}->{Carrier}),
+			'Continent' => ucwords($geoPostyXML->{Location}->{Continent}->{Name}),
+			'Country' => strtoupper($geoPostyXML->{Location}->{Country}->{Name}),
+			'Region' => ucwords($geoPostyXML->{Location}->{Region}->{Name}),
+			'State' => strtoupper($geoPostyXML->{Location}->{State}->{Name}),
+			'City' => ucwords($geoPostyXML->{Location}->{City}->{Name}),
+			'PostalCode' => (string)$geoPostyXML->{Location}->{City}->{PostalCode},
+			'AreaCode' => (string)$geoPostyXML->{Location}->{City}->{AreaCode},
+			'Latitude' => (string)$geoPostyXML->{Location}->{City}->{Coordinates}->{Latitude},
+			'Longitude' => (string)$geoPostyXML->{Location}->{City}->{Coordinates}->{Longitude}
 		);
-		
+
 		// cache quova info for 24 hours per IP
 		set_transient('geo-' . $geoMD5, $geoPosty, 60*60*24);
 
@@ -101,14 +93,14 @@ function getGeoPostyWeather() {
 }
 
 function geoGetAddressLocation($address) {
-	global $geoposty_neustar_api_key;
+	global $geoposty_api_key;
 
 	$addressMD5 = md5($address);
 	$getAddressLocation = get_option('geoAddressLocation');
 
 	if ($getAddressLocation[$addressMD5]) return $getAddressLocation[$addressMD5];
 	else {
-		$server = SERVER . 'geosearch.php?domainkey='.$geoposty_neustar_api_key.'&q='.urlencode($address);
+		$server = SERVER . 'geosearch.php?domainkey='.$geoposty_api_key.'&q='.urlencode($address);
 		if(GDEBUG) { error_log("geoposty:curl:geoGetAddressLocation: server=$server "); }
 		$data = wp_remote_retrieve_body(wp_remote_get($server));
 
@@ -125,5 +117,24 @@ function geoGetAddressLocation($address) {
 	}
 }
 
+function geoAdminStats($type) {
+	global $geoposty_api_key;
 
+	$data = wp_remote_retrieve_body(wp_remote_get(GEOSERVER .'domain='. $_SERVER['HTTP_HOST'] .'&domainkey=' . $geoposty_api_key . '&stats=' . $type));
+
+	return json_decode($data);
+}
+
+/*
+add_action('wp_footer', 'doFoot');
+
+function doFoot() {
+	echo '<pre>';
+	$getAddressLocation = get_option('geoAddressLocation');
+	echo '<h2>'. count($getAddressLocation) .'</h2>';
+	print_r($getAddressLocation);
+	echo '</pre>';
+}
+
+*/
 ?>

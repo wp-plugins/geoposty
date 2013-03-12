@@ -6,14 +6,14 @@ if ( !wp_next_scheduled('geoUsageReporting') ) {
 
 
 function geoUsageReportingFunction() {
-	global $geoposty_neustar_api_key;
+	global $geoposty_api_key;
 
 	$geoStats = get_option('geoStats');
 
 	$options = array();
 	$options['timeout'] = 1;
 	$options['body'] = $geoStats;
-	$options['body']['domainkey'] = $geoposty_neustar_api_key;
+	$options['body']['domainkey'] = $geoposty_api_key;
 	$options['body']['domain'] = $_SERVER['HTTP_HOST'];
 
 	$doStats = wp_remote_post('http://api.geoposty.com/stats.php', $options);
