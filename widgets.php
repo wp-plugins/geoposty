@@ -73,28 +73,12 @@ class postyMapSidebar extends WP_Widget {
 		<em>zoom level 1=continent, zoom level 21=user's backyard.  we recommend something like 12.</em></p>
 		<p><label>Width <input name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo $width; ?>" class="widefat" /></label></p>
 		<p><label>Height <input name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo $height; ?>" class="widefat" /></label></p>
-
-		<p class="geoswitch"><a href="#" class="<?php echo $this->get_field_id( 'distancefrom' ); ?>">Radius Based Display</a></p>
+        
 
 		<?php
 			unset($geoWidgetHide);
 			if (empty($miles) && empty($distancefrom)) $geoWidgetHide = ' style="display:none;"';
 		?>
-
-		<div class="<?php echo $this->get_field_id( 'distancefrom' ); ?>"<?php echo $geoWidgetHide; ?>>
-			<p><label for="<?php echo $this->get_field_id( 'distancefrom' ); ?>">Distance From <input name="<?php echo $this->get_field_name('distancefrom'); ?>" type="text" value="<?php echo $distancefrom; ?>" class="widefat" /></label></p>
-			<p><label for="<?php echo $this->get_field_id( 'miles' ); ?>">Miles 
-					<select name="<?php echo $this->get_field_name('miles'); ?>">
-						<option></option>
-						<option <?php if ($miles == '50') echo 'selected="selected"'; ?>>50</option>
-						<option <?php if ($miles == '100') echo 'selected="selected"'; ?>>100</option>
-						<option <?php if ($miles == '200') echo 'selected="selected"'; ?>>200</option>
-						<option <?php if ($miles == '500') echo 'selected="selected"'; ?>>500</option>
-						<option <?php if ($miles == '1000') echo 'selected="selected"'; ?>>1000</option>
-						<option <?php if ($miles == '1500') echo 'selected="selected"'; ?>>1500</option>
-						<option <?php if ($miles == '5000') echo 'selected="selected"'; ?>>5000</option>
-					</select></label></p>
-		</div>
 
 		<p class="geoswitch"><a href="#" class="<?php echo $this->get_field_id( 'locationtype' ); ?>">Location Based Display</a></p>
 
@@ -207,28 +191,6 @@ class postyGoogleMapSidebar extends WP_Widget {
 		<p><label>Width <input name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo $width; ?>" class="widefat" /></label></p>
 		<p><label>Height <input name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo $height; ?>" class="widefat" /></label></p>
 
-		<p class="geoswitch"><a href="#" class="<?php echo $this->get_field_id( 'distancefrom' ); ?>">Radius Based Display</a></p>
-
-		<?php
-			unset($geoWidgetHide);
-			if (empty($miles) && empty($distancefrom)) $geoWidgetHide = ' style="display:none;"';
-		?>
-
-		<div class="<?php echo $this->get_field_id( 'distancefrom' ); ?>"<?php echo $geoWidgetHide; ?>>
-			<p><label for="<?php echo $this->get_field_id( 'distancefrom' ); ?>">Distance From <input name="<?php echo $this->get_field_name('distancefrom'); ?>" type="text" value="<?php echo $distancefrom; ?>" class="widefat" /></label></p>
-			<p><label for="<?php echo $this->get_field_id( 'miles' ); ?>">Miles 
-					<select name="<?php echo $this->get_field_name('miles'); ?>">
-						<option></option>
-						<option <?php if ($miles == '50') echo 'selected="selected"'; ?>>50</option>
-						<option <?php if ($miles == '100') echo 'selected="selected"'; ?>>100</option>
-						<option <?php if ($miles == '200') echo 'selected="selected"'; ?>>200</option>
-						<option <?php if ($miles == '500') echo 'selected="selected"'; ?>>500</option>
-						<option <?php if ($miles == '1000') echo 'selected="selected"'; ?>>1000</option>
-						<option <?php if ($miles == '1500') echo 'selected="selected"'; ?>>1500</option>
-						<option <?php if ($miles == '5000') echo 'selected="selected"'; ?>>5000</option>
-					</select></label></p>
-		</div>
-
 		<p class="geoswitch"><a href="#" class="<?php echo $this->get_field_id( 'locationtype' ); ?>">Location Based Display</a></p>
 
 		<?php
@@ -323,28 +285,6 @@ class postyTextSidebar extends WP_Widget {
 		
 		<p><label for="<?php echo $this->get_field_id( 'text' ); ?>">Text <textarea class="widefat geoTextCounter" rows="6" cols="15" name="<?php echo $this->get_field_name('text'); ?>" id="<?php echo $this->get_field_id( 'text' ); ?>"><?php echo stripslashes($text); ?></textarea><br />
 		<em>We recommend you use 500 characters or less for your text. So far you've used <span class="geoTextCounter">0</span>.</em></label></p>
-
-		<p class="geoswitch"><a href="#" class="<?php echo $this->get_field_id( 'distancefrom' ); ?>">Radius Based Display</a></p>
-
-		<?php
-			unset($geoWidgetHide);
-			if (empty($miles) && empty($distancefrom)) $geoWidgetHide = ' style="display:none;"';
-		?>
-
-		<div class="<?php echo $this->get_field_id( 'distancefrom' ); ?>"<?php echo $geoWidgetHide; ?>>
-			<p><label for="<?php echo $this->get_field_id( 'distancefrom' ); ?>">Distance From <input name="<?php echo $this->get_field_name('distancefrom'); ?>" type="text" value="<?php echo $distancefrom; ?>" class="widefat" /></label></p>
-			<p><label for="<?php echo $this->get_field_id( 'miles' ); ?>">Miles 
-					<select name="<?php echo $this->get_field_name('miles'); ?>">
-						<option></option>
-						<option <?php if ($miles == '50') echo 'selected="selected"'; ?>>50</option>
-						<option <?php if ($miles == '100') echo 'selected="selected"'; ?>>100</option>
-						<option <?php if ($miles == '200') echo 'selected="selected"'; ?>>200</option>
-						<option <?php if ($miles == '500') echo 'selected="selected"'; ?>>500</option>
-						<option <?php if ($miles == '1000') echo 'selected="selected"'; ?>>1000</option>
-						<option <?php if ($miles == '1500') echo 'selected="selected"'; ?>>1500</option>
-						<option <?php if ($miles == '5000') echo 'selected="selected"'; ?>>5000</option>
-					</select></label></p>
-		</div>
 
 		<p class="geoswitch"><a href="#" class="<?php echo $this->get_field_id( 'locationtype' ); ?>">Location Based Display</a></p>
 
@@ -450,29 +390,7 @@ class postyWeatherSidebar extends WP_Widget {
 						<option <?php if ($measurement == 'Fahrenheit') echo 'selected="selected"'; ?>>Fahrenheit</option>
 						<option <?php if ($measurement == 'Celcius') echo 'selected="selected"'; ?>>Celcius</option>
 					</select></label></p>
-
-		<p class="geoswitch"><a href="#" class="<?php echo $this->get_field_id( 'distancefrom' ); ?>">Radius Based Display</a></p>
-
-		<?php
-			unset($geoWidgetHide);
-			if (empty($miles) && empty($distancefrom)) $geoWidgetHide = ' style="display:none;"';
-		?>
-
-		<div class="<?php echo $this->get_field_id( 'distancefrom' ); ?>"<?php echo $geoWidgetHide; ?>>
-			<p><label for="<?php echo $this->get_field_id( 'distancefrom' ); ?>">Distance From <input name="<?php echo $this->get_field_name('distancefrom'); ?>" type="text" value="<?php echo $distancefrom; ?>" class="widefat" /></label></p>
-			<p><label for="<?php echo $this->get_field_id( 'miles' ); ?>">Miles 
-					<select name="<?php echo $this->get_field_name('miles'); ?>">
-						<option></option>
-						<option <?php if ($miles == '50') echo 'selected="selected"'; ?>>50</option>
-						<option <?php if ($miles == '100') echo 'selected="selected"'; ?>>100</option>
-						<option <?php if ($miles == '200') echo 'selected="selected"'; ?>>200</option>
-						<option <?php if ($miles == '500') echo 'selected="selected"'; ?>>500</option>
-						<option <?php if ($miles == '1000') echo 'selected="selected"'; ?>>1000</option>
-						<option <?php if ($miles == '1500') echo 'selected="selected"'; ?>>1500</option>
-						<option <?php if ($miles == '5000') echo 'selected="selected"'; ?>>5000</option>
-					</select></label></p>
-		</div>
-
+        
 		<p class="geoswitch"><a href="#" class="<?php echo $this->get_field_id( 'locationtype' ); ?>">Location Based Display</a></p>
 
 		<?php
@@ -569,28 +487,6 @@ class postyBusinessSidebar extends WP_Widget {
 	
 		<p><label for="<?php echo $this->get_field_id( 'results' ); ?>">Results <select name="<?php echo $this->get_field_name('results'); ?>" id="<?php echo $this->get_field_id( 'results' ); ?>"><option <?php if ($results == '1') echo 'selected="selected"'; ?>>1</option><option <?php if ($results == '2') echo 'selected="selected"'; ?>>2</option><option <?php if ($results == '3') echo 'selected="selected"'; ?>>3</option><option <?php if ($results == '4') echo 'selected="selected"'; ?>>4</option><option <?php if ($results == '5') echo 'selected="selected"'; ?>>5</option><option <?php if ($results == '6') echo 'selected="selected"'; ?>>6</option><option <?php if ($results == '7') echo 'selected="selected"'; ?>>7</option><option <?php if ($results == '8') echo 'selected="selected"'; ?>>8</option></select></label></p>
   
-		<p class="geoswitch"><a href="#" class="<?php echo $this->get_field_id( 'distancefrom' ); ?>">Radius Based Display</a></p>
-
-		<?php
-			unset($geoWidgetHide);
-			if (empty($miles) && empty($distancefrom)) $geoWidgetHide = ' style="display:none;"';
-		?>
-
-		<div class="<?php echo $this->get_field_id( 'distancefrom' ); ?>"<?php echo $geoWidgetHide; ?>>
-			<p><label for="<?php echo $this->get_field_id( 'distancefrom' ); ?>">Distance From <input name="<?php echo $this->get_field_name('distancefrom'); ?>" type="text" value="<?php echo $distancefrom; ?>" class="widefat" /></label></p>
-			<p><label for="<?php echo $this->get_field_id( 'miles' ); ?>">Miles 
-					<select name="<?php echo $this->get_field_name('miles'); ?>">
-						<option></option>
-						<option <?php if ($miles == '50') echo 'selected="selected"'; ?>>50</option>
-						<option <?php if ($miles == '100') echo 'selected="selected"'; ?>>100</option>
-						<option <?php if ($miles == '200') echo 'selected="selected"'; ?>>200</option>
-						<option <?php if ($miles == '500') echo 'selected="selected"'; ?>>500</option>
-						<option <?php if ($miles == '1000') echo 'selected="selected"'; ?>>1000</option>
-						<option <?php if ($miles == '1500') echo 'selected="selected"'; ?>>1500</option>
-						<option <?php if ($miles == '5000') echo 'selected="selected"'; ?>>5000</option>
-					</select></label></p>
-		</div>
-
 		<p class="geoswitch"><a href="#" class="<?php echo $this->get_field_id( 'locationtype' ); ?>">Location Based Display</a></p>
 
 		<?php
