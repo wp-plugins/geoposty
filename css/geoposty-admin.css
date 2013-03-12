@@ -25,4 +25,19 @@ input.geoLongText {
 }
 .geoSuccess {
     clear:both;
+}  
+
+form#geoposty-conf {
+  width: 600px;
+}
+
+form#geoposty-conf input[type="text"]{ 
+  
+  width: 200px;
+  
+} 
+
+form#geoposty-conf th {
+  width: 80px;  
+  font-weight: bold;
 }
